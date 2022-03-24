@@ -1,6 +1,22 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-}
+const withPlugins = require("next-compose-plugins");
+const withPWA = require("next-pwa");
 
-module.exports = nextConfig
+const nextConfig = {
+	reactStrictMode: true,
+};
+
+module.exports = withPlugins(
+	[
+		[
+			withPWA,
+			{
+				pwa: {
+					dest: "public",
+				},
+			},
+		],
+		// More Plugin
+	],
+	nextConfig
+);
