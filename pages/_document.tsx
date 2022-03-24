@@ -22,8 +22,8 @@ export default function Document() {
 				<meta name="apple-mobile-web-app-title" content="방현준"></meta>
 
 				{/* 컬러 */}
-				<meta name="msapplication-TileColor" content="#ffffff"></meta>
-				<meta name="theme-color" content="#ffffff"></meta>
+				<meta name="msapplication-TileColor" content="#FF98BA"></meta>
+				<meta name="theme-color" content="#FF98BA"></meta>
 
 				{/* 매니 패스트*/}
 				<link rel="manifest" href="/manifest.json" />
