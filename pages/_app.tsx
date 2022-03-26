@@ -6,6 +6,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
+import { pwaTrackingListeners } from "../scripts/pwaEventlisteners";
+
+const isBrowser = typeof window !== "undefined";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -14,8 +17,13 @@ interface MyAppProps extends AppProps {
 	emotionCache?: EmotionCache;
 }
 
+if (isBrowser) {
+	pwaTrackingListeners();
+}
+
 function MyApp(props: MyAppProps) {
 	const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
 	return (
 		<CacheProvider value={emotionCache}>
 			<Head>
@@ -28,6 +36,19 @@ function MyApp(props: MyAppProps) {
 			</ThemeProvider>
 		</CacheProvider>
 	);
+}
+
+if (isBrowser && "serviceWorker" in navigator) {
+	window.addEventListener("load", () => {
+		navigator.serviceWorker
+			.register("/service-worker.js")
+			.then(() => {
+				console.log("Service worker registered");
+			})
+			.catch((err) => {
+				console.log("Service worker registration failed", err);
+			});
+	});
 }
 
 export default MyApp;
