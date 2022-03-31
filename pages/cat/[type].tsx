@@ -5,16 +5,68 @@ import Image from "next/image";
 import {
 	Box,
 	Container,
+	IconButton,
 	ImageList,
 	ImageListItem,
+	Toolbar,
 	Typography,
 } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import { AppBar } from "@components/AppBar";
+import { useRouter } from "next/router";
 
-export default function Cat({ cat }: { cat: CatType }) {
+function Cat({ cat }: { cat: CatType }) {
+	const router = useRouter();
+
+	const handleOnClick = () => {
+		router.back();
+	};
+
 	return (
-		<Container>
-			<Typography>{cat.name}</Typography>
-			<Typography>{cat.home}</Typography>
+		<>
+			{/* 앱 바 */}
+			<AppBar isBackBtn={true} onClickBack={handleOnClick}>
+				{cat.name}
+			</AppBar>
+
+			<main style={{ margin: "8px 12px" }}>
+				<Container disableGutters sx={{ border: "3px solid #FF5A79" }}>
+					{/* 프로필 이미지 */}
+					<Stack>
+						<Container sx={{ backgroundColor: "#FF5A79" }} maxWidth={"xl"}>
+							<Typography
+								variant={"subtitle1"}
+								component="strong"
+								sx={{ color: "#ffffff" }}
+							>
+								프로필
+							</Typography>
+						</Container>
+						<Container disableGutters maxWidth={"lg"}>
+							<Image
+								src={`/images/cat/${cat.type}/${cat.thumb}`}
+								alt="고양이 썸네일"
+								width={"100%"}
+								height={70}
+								layout="responsive"
+								objectFit="contain"
+							/>
+						</Container>
+					</Stack>
+
+					<Stack direction="row" spacing={2}>
+						<Box>
+							<Typography variant={"subtitle1"} component="strong">
+								출생지
+							</Typography>
+						</Box>
+						<Box>
+							<Typography component="span">{cat.home}</Typography>
+						</Box>
+					</Stack>
+				</Container>
+			</main>
+
 			<Typography>{cat.bodyType}</Typography>
 			<Typography>{cat.weight}</Typography>
 			<Typography>{cat.fur}</Typography>
@@ -36,7 +88,7 @@ export default function Cat({ cat }: { cat: CatType }) {
 					))}
 				</ImageList>
 			</Box>
-		</Container>
+		</>
 	);
 }
 
@@ -68,3 +120,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 		},
 	};
 };
+
+export default Cat;

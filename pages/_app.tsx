@@ -4,8 +4,8 @@ import { AppProps } from "next/app";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import theme from "../src/theme";
-import createEmotionCache from "../src/createEmotionCache";
+import theme from "../config/theme";
+import createEmotionCache from "../config/createEmotionCache";
 import { pwaTrackingListeners } from "../scripts/pwaEventlisteners";
 
 const isBrowser = typeof window !== "undefined";

@@ -1,7 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
-import theme from "../src/theme";
-import createEmotionCache from "../src/createEmotionCache";
+import theme from "../config/theme";
+import createEmotionCache from "../config/createEmotionCache";
 
 class MyDocument extends Document {
 	render() {
@@ -81,6 +81,18 @@ class MyDocument extends Document {
 						href="/images/splashscreens/ipadpro2_splash.png"
 						media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)"
 					></link>
+
+					{/* 폰트 */}
+					<link rel="preconnect" href="https://fonts.googleapis.com" />
+					<link
+						rel="preconnect"
+						href="https://fonts.gstatic.com"
+						crossOrigin="anonymous"
+					/>
+					<link
+						href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;200;300;400;500;600;700;800;900&display=swap"
+						rel="stylesheet"
+					/>
 
 					{/* Inject MUI styles first to match with the prepend: true configuration. */}
 					{(this.props as any).emotionStyleTags}
