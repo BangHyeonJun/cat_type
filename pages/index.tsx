@@ -11,12 +11,22 @@ import SearchIcon from "@mui/icons-material/Search";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { Button, CardActionArea, CardActions, Stack } from "@mui/material";
+import {
+	Button,
+	CardActionArea,
+	CardActions,
+	Grid,
+	Paper,
+	Stack,
+} from "@mui/material";
 import { cats as catsData } from "../data/cats";
 import type { CatType } from "../data/cats";
 import Link from "next/link";
 import { AppBar } from "@components/AppBar";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import RestoreIcon from "@mui/icons-material/Restore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { BottomNavigation } from "@components/BottomNavigation";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -80,49 +90,59 @@ function Home({ cats }: HomeProps) {
 	return (
 		<>
 			{/* 앱 바 */}
-			<AppBar isSearchBtn={true}>홈</AppBar>
+			<AppBar>홈</AppBar>
 
 			{/* 고양이 리스트 */}
 			<main>
 				<Container
 					disableGutters
-					maxWidth={false}
+					maxWidth={"md"}
 					sx={{
 						padding: "20px 20px 20px 20px",
 					}}
 				>
-					<Stack spacing={2.5}>
+					<Grid
+						container
+						justifyContent="center"
+						spacing={{ xs: 2, md: 4 }}
+						columns={{ xs: 4, sm: 4, md: 8 }}
+					>
 						{cats.map(({ id, name, type, thumb }) => (
-							<Link key={id} href={`cat/${type}`}>
-								<Card>
-									<CardActionArea>
-										<CardMedia
-											component="img"
-											height="372px"
-											image={`/images/cat/${type}/${thumb}`}
-											alt="green iguana"
-										/>
-										<CardContent>
-											<Stack direction={"row"}>
-												<Typography
-													variant="h6"
-													sx={{
-														fontWeight: 500,
-														fontSize: "1.125rem",
-														flexGrow: 1,
-													}}
-												>
-													{name}
-												</Typography>
-												<ArrowForwardIosRoundedIcon />
-											</Stack>
-										</CardContent>
-									</CardActionArea>
-								</Card>
-							</Link>
+							<Grid key={id} item xs={4} sm={3} md={4}>
+								<Link href={`cat/${type}`}>
+									<Card>
+										<CardActionArea>
+											<CardMedia
+												component="img"
+												height="372px"
+												image={`/images/cat/${type}/${thumb}`}
+												alt="green iguana"
+											/>
+											<CardContent>
+												<Stack direction={"row"}>
+													<Typography
+														variant="h6"
+														sx={{
+															fontWeight: 500,
+															fontSize: "1.125rem",
+															flexGrow: 1,
+														}}
+													>
+														{name}
+													</Typography>
+													<ArrowForwardIosRoundedIcon />
+												</Stack>
+											</CardContent>
+										</CardActionArea>
+									</Card>
+								</Link>
+							</Grid>
 						))}
-					</Stack>
+					</Grid>
 				</Container>
+
+				{/* 하단 네비게이션 */}
+				{/* <BottomNavigation /> */}
 			</main>
 		</>
 	);

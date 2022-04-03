@@ -4,45 +4,79 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import {
 	Box,
+	Collapse,
 	Container,
 	IconButton,
 	ImageList,
 	ImageListItem,
+	List,
+	ListItemButton,
+	ListItemIcon,
+	ListItemText,
 	Toolbar,
 	Typography,
 } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { AppBar } from "@components/AppBar";
 import { useRouter } from "next/router";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
 function Cat({ cat }: { cat: CatType }) {
 	const router = useRouter();
 
-	const handleOnClick = () => {
+	const handleClickBack = () => {
 		router.back();
+	};
+
+	const handleClickHome = () => {
+		router.push("/");
 	};
 
 	return (
 		<>
 			{/* 앱 바 */}
-			<AppBar isBackBtn={true} onClickBack={handleOnClick}>
+			<AppBar
+				isBackBtn={true}
+				onClickBack={handleClickBack}
+				isHomeBtn={true}
+				onClickHome={handleClickHome}
+			>
 				{cat.name}
 			</AppBar>
 
-			<main style={{ margin: "8px 12px" }}>
-				<Container disableGutters sx={{ border: "3px solid #FF5A79" }}>
+			<main style={{ margin: "20px 12px" }}>
+				<Container
+					disableGutters
+					maxWidth={"md"}
+					sx={{ border: "3px solid #FF5A79" }}
+				>
 					{/* 프로필 이미지 */}
-					<Stack>
-						<Container sx={{ backgroundColor: "#FF5A79" }} maxWidth={"xl"}>
+					<Container disableGutters>
+						<Box
+							sx={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								justifyContent: "center",
+								backgroundColor: "#FF5A79",
+								padding: "8px 0px",
+							}}
+						>
 							<Typography
-								variant={"subtitle1"}
-								component="strong"
-								sx={{ color: "#ffffff" }}
+								component="h2"
+								sx={{ color: "#ffffff", fontSize: "1.3rem", fontWeight: 800 }}
 							>
-								프로필
+								{cat.name}
 							</Typography>
-						</Container>
-						<Container disableGutters maxWidth={"lg"}>
+							<Typography
+								component="h2"
+								sx={{ color: "#ffffff", fontSize: "1rem", fontWeight: 500 }}
+							>
+								({cat.enName})
+							</Typography>
+						</Box>
+
+						<Box>
 							<Image
 								src={`/images/cat/${cat.type}/${cat.thumb}`}
 								alt="고양이 썸네일"
@@ -51,43 +85,549 @@ function Cat({ cat }: { cat: CatType }) {
 								layout="responsive"
 								objectFit="contain"
 							/>
-						</Container>
-					</Stack>
+						</Box>
+					</Container>
 
-					<Stack direction="row" spacing={2}>
-						<Box>
-							<Typography variant={"subtitle1"} component="strong">
+					{/* 출생지 */}
+					<Stack direction="row">
+						<Box
+							sx={{
+								backgroundColor: "#FF5A79",
+								padding: "8px 0px",
+								width: 120,
+								display: "flex",
+								alignItems: "center",
+								justifyContent: "center",
+								borderTop: "1px solid #ffffff",
+							}}
+						>
+							<Typography
+								component="h3"
+								sx={{
+									color: "#ffffff",
+									fontSize: "1rem",
+									fontWeight: 500,
+								}}
+							>
 								출생지
 							</Typography>
 						</Box>
-						<Box>
-							<Typography component="span">{cat.home}</Typography>
+						<Box
+							sx={{
+								width: "Calc(100% - 120px)",
+								padding: "8px 0px 8px 16px",
+								borderTop: "1px solid #FF5A79",
+							}}
+						>
+							<Typography
+								component="p"
+								sx={{
+									fontSize: "1rem",
+									fontWeight: 400,
+								}}
+							>
+								{cat.home}
+							</Typography>
+						</Box>
+					</Stack>
+
+					{/* 체형 */}
+					<Stack direction="row">
+						<Box
+							sx={{
+								backgroundColor: "#FF5A79",
+								padding: "8px 0px",
+								width: 120,
+								display: "flex",
+								alignItems: "center",
+								justifyContent: "center",
+								borderTop: "1px solid #ffffff",
+							}}
+						>
+							<Typography
+								component="h3"
+								sx={{
+									color: "#ffffff",
+									fontSize: "1rem",
+									fontWeight: 500,
+								}}
+							>
+								체형
+							</Typography>
+						</Box>
+						<Box
+							sx={{
+								width: "Calc(100% - 120px)",
+								padding: "8px 0px 8px 16px",
+								borderTop: "1px solid #FF5A79",
+							}}
+						>
+							<Typography
+								component="p"
+								sx={{
+									fontSize: "1rem",
+									fontWeight: 400,
+								}}
+							>
+								{cat.bodyType}
+							</Typography>
+						</Box>
+					</Stack>
+
+					{/* 체중 */}
+					<Stack direction="row">
+						<Box
+							sx={{
+								backgroundColor: "#FF5A79",
+								padding: "8px 0px",
+								width: 120,
+								display: "flex",
+								alignItems: "center",
+								justifyContent: "center",
+								borderTop: "1px solid #ffffff",
+							}}
+						>
+							<Typography
+								component="h3"
+								sx={{
+									color: "#ffffff",
+									fontSize: "1rem",
+									fontWeight: 500,
+								}}
+							>
+								체중
+							</Typography>
+						</Box>
+						<Box
+							sx={{
+								width: "Calc(100% - 120px)",
+								padding: "8px 0px 8px 16px",
+								borderTop: "1px solid #FF5A79",
+							}}
+						>
+							<Typography
+								component="p"
+								sx={{
+									fontSize: "1rem",
+									fontWeight: 400,
+								}}
+							>
+								{cat.weight}
+							</Typography>
+						</Box>
+					</Stack>
+
+					{/* 털 */}
+					<Stack direction="row">
+						<Box
+							sx={{
+								backgroundColor: "#FF5A79",
+								padding: "8px 0px",
+								width: 120,
+								display: "flex",
+								alignItems: "center",
+								justifyContent: "center",
+								borderTop: "1px solid #ffffff",
+							}}
+						>
+							<Typography
+								component="h3"
+								sx={{
+									color: "#ffffff",
+									fontSize: "1rem",
+									fontWeight: 500,
+								}}
+							>
+								털
+							</Typography>
+						</Box>
+						<Box
+							sx={{
+								width: "Calc(100% - 120px)",
+								padding: "8px 0px 8px 16px",
+								borderTop: "1px solid #FF5A79",
+							}}
+						>
+							<Typography
+								component="p"
+								sx={{
+									fontSize: "1rem",
+									fontWeight: 400,
+								}}
+							>
+								{cat.fur}
+							</Typography>
 						</Box>
 					</Stack>
 				</Container>
-			</main>
 
-			<Typography>{cat.bodyType}</Typography>
-			<Typography>{cat.weight}</Typography>
-			<Typography>{cat.fur}</Typography>
-			<Typography>{cat.description}</Typography>
-			<Typography>{cat.face}</Typography>
-			<Typography>{cat.furDetail}</Typography>
-			<Typography>{cat.personality}</Typography>
-			<Typography>{cat.care}</Typography>
-			<Box>
-				<ImageList>
-					{cat.images.map((image) => (
-						<ImageListItem key={image}>
-							<Image
-								src={`/images/cat/${cat.type}/${image}`}
-								width={300}
-								height={300}
+				<Container
+					disableGutters
+					maxWidth={"md"}
+					sx={{
+						marginTop: 2,
+					}}
+				>
+					<Box
+						sx={{
+							width: "100%",
+							display: "flex",
+							alignItems: "center",
+							borderBottom: "1px solid #000000",
+							paddingTop: 1,
+							paddingBottom: 1,
+						}}
+					>
+						<IconButton
+							aria-label="확장 버튼"
+							sx={{
+								transform: "rotate(90deg)",
+							}}
+						>
+							<ArrowForwardIosRoundedIcon
+								sx={{
+									width: "18px",
+									height: "18px",
+								}}
 							/>
-						</ImageListItem>
-					))}
-				</ImageList>
-			</Box>
+						</IconButton>
+						<Typography
+							component="h3"
+							sx={{
+								fontSize: "1.5rem",
+								fontWeight: 600,
+								marginTop: "4px",
+								marginLeft: 1,
+							}}
+						>
+							설명
+						</Typography>
+					</Box>
+
+					<Box
+						sx={{
+							width: "100%",
+							paddingTop: 2,
+						}}
+					>
+						<Typography
+							component="p"
+							sx={{
+								fontSize: "1rem",
+								fontWeight: 400,
+							}}
+						>
+							{cat.description}
+						</Typography>
+					</Box>
+				</Container>
+
+				<Container
+					disableGutters
+					maxWidth={"md"}
+					sx={{
+						marginTop: 2,
+					}}
+				>
+					<Box
+						sx={{
+							width: "100%",
+							display: "flex",
+							alignItems: "center",
+							borderBottom: "1px solid #000000",
+							paddingTop: 1,
+							paddingBottom: 1,
+						}}
+					>
+						<IconButton
+							aria-label="확장 버튼"
+							sx={{
+								transform: "rotate(90deg)",
+							}}
+						>
+							<ArrowForwardIosRoundedIcon
+								sx={{
+									width: "18px",
+									height: "18px",
+								}}
+							/>
+						</IconButton>
+						<Typography
+							component="h3"
+							sx={{
+								fontSize: "1.5rem",
+								fontWeight: 600,
+								marginTop: "4px",
+								marginLeft: 1,
+							}}
+						>
+							외모
+						</Typography>
+					</Box>
+
+					<Box
+						sx={{
+							width: "100%",
+							paddingTop: 2,
+						}}
+					>
+						<Typography
+							component="p"
+							sx={{
+								fontSize: "1rem",
+								fontWeight: 400,
+							}}
+						>
+							{cat.face}
+						</Typography>
+					</Box>
+				</Container>
+
+				<Container
+					disableGutters
+					maxWidth={"md"}
+					sx={{
+						marginTop: 2,
+					}}
+				>
+					<Box
+						sx={{
+							width: "100%",
+							display: "flex",
+							alignItems: "center",
+							borderBottom: "1px solid #000000",
+							paddingTop: 1,
+							paddingBottom: 1,
+						}}
+					>
+						<IconButton
+							aria-label="확장 버튼"
+							sx={{
+								transform: "rotate(90deg)",
+							}}
+						>
+							<ArrowForwardIosRoundedIcon
+								sx={{
+									width: "18px",
+									height: "18px",
+								}}
+							/>
+						</IconButton>
+						<Typography
+							component="h3"
+							sx={{
+								fontSize: "1.5rem",
+								fontWeight: 600,
+								marginTop: "4px",
+								marginLeft: 1,
+							}}
+						>
+							털 모양
+						</Typography>
+					</Box>
+
+					<Box
+						sx={{
+							width: "100%",
+							paddingTop: 2,
+						}}
+					>
+						<Typography
+							component="p"
+							sx={{
+								fontSize: "1rem",
+								fontWeight: 400,
+							}}
+						>
+							{cat.furDetail}
+						</Typography>
+					</Box>
+				</Container>
+
+				<Container
+					disableGutters
+					maxWidth={"md"}
+					sx={{
+						marginTop: 2,
+					}}
+				>
+					<Box
+						sx={{
+							width: "100%",
+							display: "flex",
+							alignItems: "center",
+							borderBottom: "1px solid #000000",
+							paddingTop: 1,
+							paddingBottom: 1,
+						}}
+					>
+						<IconButton
+							aria-label="확장 버튼"
+							sx={{
+								transform: "rotate(90deg)",
+							}}
+						>
+							<ArrowForwardIosRoundedIcon
+								sx={{
+									width: "18px",
+									height: "18px",
+								}}
+							/>
+						</IconButton>
+						<Typography
+							component="h3"
+							sx={{
+								fontSize: "1.5rem",
+								fontWeight: 600,
+								marginTop: "4px",
+								marginLeft: 1,
+							}}
+						>
+							성격
+						</Typography>
+					</Box>
+
+					<Box
+						sx={{
+							width: "100%",
+							paddingTop: 2,
+						}}
+					>
+						<Typography
+							component="p"
+							sx={{
+								fontSize: "1rem",
+								fontWeight: 400,
+							}}
+						>
+							{cat.personality}
+						</Typography>
+					</Box>
+				</Container>
+
+				<Container
+					disableGutters
+					maxWidth={"md"}
+					sx={{
+						marginTop: 2,
+					}}
+				>
+					<Box
+						sx={{
+							width: "100%",
+							display: "flex",
+							alignItems: "center",
+							borderBottom: "1px solid #000000",
+							paddingTop: 1,
+							paddingBottom: 1,
+						}}
+					>
+						<IconButton
+							aria-label="확장 버튼"
+							sx={{
+								transform: "rotate(90deg)",
+							}}
+						>
+							<ArrowForwardIosRoundedIcon
+								sx={{
+									width: "18px",
+									height: "18px",
+								}}
+							/>
+						</IconButton>
+						<Typography
+							component="h3"
+							sx={{
+								fontSize: "1.5rem",
+								fontWeight: 600,
+								marginTop: "4px",
+								marginLeft: 1,
+							}}
+						>
+							돌보는 방법
+						</Typography>
+					</Box>
+
+					<Box
+						sx={{
+							width: "100%",
+							paddingTop: 2,
+						}}
+					>
+						<Typography
+							component="p"
+							sx={{
+								fontSize: "1rem",
+								fontWeight: 400,
+							}}
+						>
+							{cat.care}
+						</Typography>
+					</Box>
+				</Container>
+
+				<Container
+					disableGutters
+					maxWidth={"md"}
+					sx={{
+						marginTop: 2,
+					}}
+				>
+					<Box
+						sx={{
+							width: "100%",
+							display: "flex",
+							alignItems: "center",
+							borderBottom: "1px solid #000000",
+							paddingTop: 1,
+							paddingBottom: 1,
+						}}
+					>
+						<IconButton
+							aria-label="확장 버튼"
+							sx={{
+								transform: "rotate(90deg)",
+							}}
+						>
+							<ArrowForwardIosRoundedIcon
+								sx={{
+									width: "18px",
+									height: "18px",
+								}}
+							/>
+						</IconButton>
+						<Typography
+							component="h3"
+							sx={{
+								fontSize: "1.5rem",
+								fontWeight: 600,
+								marginTop: "4px",
+								marginLeft: 1,
+							}}
+						>
+							사진
+						</Typography>
+					</Box>
+
+					<Box
+						sx={{
+							width: "100%",
+						}}
+					>
+						<ImageList>
+							{cat.images.map((image) => (
+								<ImageListItem key={image}>
+									<Image
+										src={`/images/cat/${cat.type}/${image}`}
+										width={300}
+										height={300}
+									/>
+								</ImageListItem>
+							))}
+						</ImageList>
+					</Box>
+				</Container>
+			</main>
 		</>
 	);
 }
