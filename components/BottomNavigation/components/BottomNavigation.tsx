@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 import { BottomNavigationAction, Paper } from "@mui/material";
 
 import BottomNavigationForMUI from "@mui/material/BottomNavigation";
+
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
