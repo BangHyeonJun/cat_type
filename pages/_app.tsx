@@ -24,12 +24,6 @@ interface MyAppProps extends AppProps {
 function MyApp(props: MyAppProps) {
 	const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-	React.useEffect(() => {
-		if (isBrowser) {
-			pwaTrackingListeners();
-		}
-	}, []);
-
 	return (
 		<CacheProvider value={emotionCache}>
 			<Head>

@@ -4,6 +4,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import {
 	Box,
+	Button,
 	Collapse,
 	Container,
 	IconButton,
@@ -20,6 +21,9 @@ import Stack from "@mui/material/Stack";
 import { AppBar } from "@components/AppBar";
 import { useRouter } from "next/router";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import { pwaTrackingListeners } from "scripts/pwaEventlisteners";
+
+const isBrowser = typeof window !== "undefined";
 
 function Cat({ cat }: { cat: CatType }) {
 	const router = useRouter();
@@ -45,6 +49,18 @@ function Cat({ cat }: { cat: CatType }) {
 			</AppBar>
 
 			<main style={{ margin: "20px 12px" }}>
+				<Container>
+					<Button
+						onClick={() => {
+							if (isBrowser) {
+								pwaTrackingListeners();
+							}
+						}}
+					>
+						다운로드
+					</Button>
+				</Container>
+
 				<Container
 					disableGutters
 					maxWidth={"md"}
