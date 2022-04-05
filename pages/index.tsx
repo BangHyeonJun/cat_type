@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useEffect, useState } from "react";
 import Container from "@mui/material/Container";
 import { styled, alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -11,11 +12,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import Fade from "@mui/material/Fade";
+import Backdrop from "@mui/material/Backdrop";
 import {
 	Button,
 	CardActionArea,
 	CardActions,
 	Grid,
+	Modal,
 	Paper,
 	Stack,
 } from "@mui/material";
@@ -27,54 +31,7 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { BottomNavigation } from "@components/BottomNavigation";
-
-const Search = styled("div")(({ theme }) => ({
-	position: "relative",
-	borderRadius: theme.shape.borderRadius,
-	backgroundColor: alpha(theme.palette.common.white, 0.15),
-	"&:hover": {
-		backgroundColor: alpha(theme.palette.common.white, 0.25),
-	},
-	marginLeft: 0,
-	width: "100%",
-	[theme.breakpoints.up("sm")]: {
-		marginLeft: theme.spacing(1),
-		width: "auto",
-	},
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-	padding: theme.spacing(0, 2),
-	height: "100%",
-	position: "absolute",
-	pointerEvents: "none",
-	display: "flex",
-	alignItems: "center",
-	justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-	color: "inherit",
-	"& .MuiInputBase-input": {
-		padding: theme.spacing(1, 1, 1, 0),
-		// vertical padding + font size from searchIcon
-		paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-		transition: theme.transitions.create("width"),
-		width: "100%",
-		[theme.breakpoints.up("sm")]: {
-			width: "12ch",
-			"&:focus": {
-				width: "20ch",
-			},
-		},
-	},
-}));
-
-// const AppBar = styled(MUIAppBar)(({ theme }) => ({
-// 	backgroundColor: "#ffffff",
-// 	color: "#000000",
-// 	boxShadow: "none",
-// }));
+import { useRouter } from "next/router";
 
 const CatCard = styled(Card)(({ theme }) => ({
 	backgroundColor: "#ffffff",
@@ -82,11 +39,33 @@ const CatCard = styled(Card)(({ theme }) => ({
 	boxShadow: "none",
 }));
 
+const style = {
+	position: "absolute" as "absolute",
+	top: "50%",
+	left: "50%",
+	transform: "translate(-50%, -50%)",
+	width: 400,
+	bgcolor: "background.paper",
+	border: "2px solid #000",
+	boxShadow: 24,
+	p: 4,
+};
+
 interface HomeProps {
 	cats: CatType[];
 }
 
 function Home({ cats }: HomeProps) {
+	const [open, setOpen] = useState(false);
+	const router = useRouter();
+
+	const handleOpen = () => setOpen(true);
+	const handleClose = () => setOpen(false);
+
+	useEffect(() => {
+		handleOpen();
+	}, []);
+
 	return (
 		<>
 			{/* 앱 바 */}
@@ -140,6 +119,40 @@ function Home({ cats }: HomeProps) {
 						))}
 					</Grid>
 				</Container>
+
+				<Modal
+					aria-labelledby="transition-modal-title"
+					aria-describedby="transition-modal-description"
+					open={open}
+					onClose={handleClose}
+					closeAfterTransition
+					BackdropComponent={Backdrop}
+					BackdropProps={{
+						timeout: 500,
+					}}
+				>
+					<Fade in={open}>
+						<Box sx={style}>
+							<Typography
+								id="transition-modal-title"
+								variant="h6"
+								component="h2"
+							>
+								무슨종이냥?
+							</Typography>
+							<Typography id="transition-modal-description" sx={{ mt: 2 }}>
+								사이트가 마음에드시나요?
+								<br />
+								무슨종이냥을 앱으로도 즐길 수 있습니다.
+							</Typography>
+
+							<Button onClick={() => router.push("/install")}>
+								앱 다운로드
+							</Button>
+							<Button onClick={() => handleClose()}>취소</Button>
+						</Box>
+					</Fade>
+				</Modal>
 
 				{/* 하단 네비게이션 */}
 				{/* <BottomNavigation /> */}
