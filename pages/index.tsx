@@ -14,10 +14,16 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Fade from "@mui/material/Fade";
 import Backdrop from "@mui/material/Backdrop";
+import CloseIcon from "@mui/icons-material/Close";
 import {
 	Button,
 	CardActionArea,
 	CardActions,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
 	Grid,
 	Modal,
 	Paper,
@@ -61,9 +67,24 @@ function Home({ cats }: HomeProps) {
 
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
+	const handleClickCloseOneDay = () => {
+		const today = new Date();
+		const tomorrow = new Date(today.setDate(today.getDate() + 1));
+		const yyyy = tomorrow.getFullYear();
+		const MM = tomorrow.getMonth() + 1;
+		const dd = tomorrow.getDate();
+
+		localStorage.setItem("reOpenDate", `${yyyy}.${MM}.${dd}`);
+		setOpen(false);
+	};
 
 	useEffect(() => {
-		handleOpen();
+		const date = localStorage.getItem("reOpenDate");
+
+		if (date === null || new Date(date) <= new Date()) {
+			handleOpen();
+			localStorage.removeItem("reOpenDate");
+		}
 	}, []);
 
 	return (
@@ -120,39 +141,42 @@ function Home({ cats }: HomeProps) {
 					</Grid>
 				</Container>
 
-				<Modal
-					aria-labelledby="transition-modal-title"
-					aria-describedby="transition-modal-description"
+				<Dialog
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
 					open={open}
 					onClose={handleClose}
-					closeAfterTransition
-					BackdropComponent={Backdrop}
-					BackdropProps={{
-						timeout: 500,
-					}}
 				>
-					<Fade in={open}>
-						<Box sx={style}>
-							<Typography
-								id="transition-modal-title"
-								variant="h6"
-								component="h2"
-							>
-								무슨종이냥?
-							</Typography>
-							<Typography id="transition-modal-description" sx={{ mt: 2 }}>
-								사이트가 마음에드시나요?
-								<br />
-								무슨종이냥을 앱으로도 즐길 수 있습니다.
-							</Typography>
-
-							<Button onClick={() => router.push("/install")}>
-								앱 다운로드
-							</Button>
-							<Button onClick={() => handleClose()}>취소</Button>
-						</Box>
-					</Fade>
-				</Modal>
+					<DialogTitle id="alert-dialog-title">
+						<Typography>사이트가 마음에드시나요?</Typography>
+						<IconButton
+							aria-label="close"
+							onClick={handleClose}
+							sx={{
+								position: "absolute",
+								right: 8,
+								top: 8,
+								color: (theme) => theme.palette.grey[500],
+							}}
+						>
+							<CloseIcon />
+						</IconButton>
+					</DialogTitle>
+					<DialogContent>
+						<DialogContentText id="alert-dialog-description">
+							무슨종이냥을 앱으로도 즐길 수 있습니다.
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<Button
+							onClick={() => handleClickCloseOneDay()}
+							sx={{ color: "#969696" }}
+						>
+							하루동안 보지 않기
+						</Button>
+						<Button onClick={() => router.push("/install")}>앱 다운로드</Button>
+					</DialogActions>
+				</Dialog>
 
 				{/* 하단 네비게이션 */}
 				{/* <BottomNavigation /> */}

@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { AppBar } from "@components/AppBar";
 import { useRouter } from "next/router";
 import {
+	Accordion,
+	AccordionActions,
+	AccordionDetails,
+	AccordionSummary,
 	Collapse,
 	Container,
 	IconButton,
@@ -60,32 +64,12 @@ function Install() {
 						marginTop: 2,
 					}}
 				>
-					<Container disableGutters>
-						<Box
-							sx={{
-								width: "100%",
-								display: "flex",
-								alignItems: "center",
-								borderBottom: "1px solid #000000",
-								paddingTop: 1,
-								paddingBottom: 1,
-							}}
+					<Accordion>
+						<AccordionSummary
+							expandIcon={<ExpandMoreRoundedIcon />}
+							aria-controls="panel1a-content"
+							id="panel1a-header"
 						>
-							<IconButton
-								aria-label="확장 버튼"
-								sx={{
-									transform: `rotate(${isOpenAos ? "90" : "0"}deg)`,
-									transition: "transform 0.2s ease-in-out",
-								}}
-								onClick={() => setIsOpenAos((old) => !old)}
-							>
-								<ArrowForwardIosRoundedIcon
-									sx={{
-										width: "18px",
-										height: "18px",
-									}}
-								/>
-							</IconButton>
 							<Typography
 								component="h3"
 								sx={{
@@ -97,9 +81,8 @@ function Install() {
 							>
 								Android 설치 방법
 							</Typography>
-						</Box>
-
-						<Collapse in={isOpenAos} timeout="auto" unmountOnExit>
+						</AccordionSummary>
+						<AccordionDetails>
 							<Box
 								sx={{
 									width: "100%",
@@ -117,7 +100,7 @@ function Install() {
 									<Link onClick={showShareDialog} sx={{ cursor: "pointer" }}>
 										무슨종이냥?
 									</Link>
-									을 열어줍니다.
+									사이트를 열어줍니다.
 								</Typography>
 
 								<Box sx={{ width: "100%" }}>
@@ -143,11 +126,7 @@ function Install() {
 										fontWeight: 500,
 									}}
 								>
-									1. Chrome으로{" "}
-									<Link onClick={showShareDialog} sx={{ cursor: "pointer" }}>
-										무슨종이냥?
-									</Link>
-									을 열어줍니다.
+									2. 상단에 메뉴 버튼을 클릭해줍니다.
 								</Typography>
 
 								<Box sx={{ width: "100%" }}>
@@ -173,11 +152,7 @@ function Install() {
 										fontWeight: 500,
 									}}
 								>
-									1. Chrome으로{" "}
-									<Link onClick={showShareDialog} sx={{ cursor: "pointer" }}>
-										무슨종이냥?
-									</Link>
-									을 열어줍니다.
+									3. 메뉴 항목 중 앱 설치 메뉴를 클릭해줍니다.
 								</Typography>
 
 								<Box sx={{ width: "100%" }}>
@@ -203,11 +178,7 @@ function Install() {
 										fontWeight: 500,
 									}}
 								>
-									1. Chrome으로{" "}
-									<Link onClick={showShareDialog} sx={{ cursor: "pointer" }}>
-										무슨종이냥?
-									</Link>
-									을 열어줍니다.
+									4. 설치 버튼을 클릭해줍니다.
 								</Typography>
 
 								<Box sx={{ width: "100%" }}>
@@ -233,11 +204,7 @@ function Install() {
 										fontWeight: 500,
 									}}
 								>
-									1. Chrome으로{" "}
-									<Link onClick={showShareDialog} sx={{ cursor: "pointer" }}>
-										무슨종이냥?
-									</Link>
-									을 열어줍니다.
+									5. 앱이 설치된 것을 확인할 수 있습니다.
 								</Typography>
 
 								<Box sx={{ width: "100%" }}>
@@ -249,8 +216,29 @@ function Install() {
 									/>
 								</Box>
 							</Box>
-						</Collapse>
-					</Container>
+						</AccordionDetails>
+					</Accordion>
+
+					<Accordion>
+						<AccordionSummary
+							expandIcon={<ExpandMoreRoundedIcon />}
+							aria-controls="panel1a-content"
+							id="panel1a-header"
+						>
+							<Typography
+								component="h3"
+								sx={{
+									fontSize: "1.5rem",
+									fontWeight: 600,
+									marginTop: "4px",
+									marginLeft: 1,
+								}}
+							>
+								IOS 설치 방법
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails></AccordionDetails>
+					</Accordion>
 				</Container>
 			</main>
 		</>
