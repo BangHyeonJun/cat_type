@@ -55,14 +55,15 @@ function Cat({ cat }: { cat: CatType }) {
 		router.push("/");
 	};
 
-	const handleClickImg = () => {
-		showFullScreenImg();
+	const handleClickImg = (idx: number) => {
+		showFullScreenImg(idx);
 	}
 
-	const showFullScreenImg = () => {
+	const showFullScreenImg = (idx: number) => {
 		if(imgGalleryRef.current){
 			setIsShowFullscreen(true);
 			(imgGalleryRef.current as any).fullScreen();
+			(imgGalleryRef.current as any).slideToIndex(idx);
 		}
 	}
 
@@ -661,13 +662,13 @@ function Cat({ cat }: { cat: CatType }) {
 						}}
 					>
 						<ImageList>
-							{cat.images.map((image) => (
+							{cat.images.map((image, i) => (
 								<ImageListItem key={image}>
 									<Image
 										src={`/images/cat/${cat.type}/${image}`}
 										width={300}
 										height={300}
-										onClick={handleClickImg}
+										onClick={() => handleClickImg(i)}
 									/>
 								</ImageListItem>
 							))}
@@ -677,13 +678,14 @@ function Cat({ cat }: { cat: CatType }) {
 					<Box sx={{ display: isShowFullscreen? "block" : "none" }}>
 						<ImageGallery 
 							ref={imgGalleryRef} 
-							items={images} 
+							items={cat.images.map((image => ({
+								original: `/images/cat/${cat.type}/${image}`,
+							})))}
 							showFullscreenButton={true}
 							showPlayButton={false} 
 							showBullets={false}
 							showThumbnails={false}
 							useBrowserFullscreen={false}
-							// onScreenChange={}
 							slideDuration={250}
 						/>
 					</Box>
