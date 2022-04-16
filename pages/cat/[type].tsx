@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { cats as catsData } from "../../data/cats";
 import type { CatType } from "../../data/cats";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -20,17 +21,57 @@ import Stack from "@mui/material/Stack";
 import { AppBar } from "@components/AppBar";
 import { useRouter } from "next/router";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import ImageGallery from 'react-image-gallery';
+
+const images = [
+	{
+		original: 'https://picsum.photos/id/1018/1000/600/',
+		thumbnail: 'https://picsum.photos/id/1018/250/150/',
+	},
+	{
+		original: 'https://picsum.photos/id/1015/1000/600/',
+		thumbnail: 'https://picsum.photos/id/1015/250/150/',
+	},
+	{
+		original: 'https://picsum.photos/id/1019/1000/600/',
+		thumbnail: 'https://picsum.photos/id/1019/250/150/',
+	},
+];
 
 function Cat({ cat }: { cat: CatType }) {
 	const router = useRouter();
+	const imgGalleryRef = useRef(null);
+	const [isShowFullscreen, setIsShowFullscreen] = useState(false);
 
 	const handleClickBack = () => {
-		router.back();
+		if(isShowFullscreen) {
+			hideFullScreenImg();
+		} else {
+			router.back();
+		}
 	};
 
 	const handleClickHome = () => {
 		router.push("/");
 	};
+
+	const handleClickImg = () => {
+		showFullScreenImg();
+	}
+
+	const showFullScreenImg = () => {
+		if(imgGalleryRef.current){
+			setIsShowFullscreen(true);
+			(imgGalleryRef.current as any).fullScreen();
+		}
+	}
+
+	const hideFullScreenImg = () => {
+		if(imgGalleryRef.current){
+			setIsShowFullscreen(false);
+			(imgGalleryRef.current as any).exitFullScreen();
+		}
+	}
 
 	return (
 		<>
@@ -626,10 +667,25 @@ function Cat({ cat }: { cat: CatType }) {
 										src={`/images/cat/${cat.type}/${image}`}
 										width={300}
 										height={300}
+										onClick={handleClickImg}
 									/>
 								</ImageListItem>
 							))}
 						</ImageList>
+					</Box>
+
+					<Box sx={{ display: isShowFullscreen? "block" : "none" }}>
+						<ImageGallery 
+							ref={imgGalleryRef} 
+							items={images} 
+							showFullscreenButton={true}
+							showPlayButton={false} 
+							showBullets={false}
+							showThumbnails={false}
+							useBrowserFullscreen={false}
+							// onScreenChange={}
+							slideDuration={250}
+						/>
 					</Box>
 				</Container>
 			</main>

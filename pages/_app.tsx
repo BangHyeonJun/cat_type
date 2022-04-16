@@ -8,6 +8,8 @@ import theme from "../config/theme";
 import createEmotionCache from "../config/createEmotionCache";
 import { pwaTrackingListeners } from "../scripts/pwaEventlisteners";
 
+import "react-image-gallery/styles/scss/image-gallery.scss";
+
 const isBrowser = typeof window !== "undefined";
 
 // Client-side cache, shared for the whole session of the user in the browser.
