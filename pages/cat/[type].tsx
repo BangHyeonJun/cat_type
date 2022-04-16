@@ -24,21 +24,6 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import ImageGallery from 'react-image-gallery';
 import Link from "next/link";
 
-const images = [
-	{
-		original: 'https://picsum.photos/id/1018/1000/600/',
-		thumbnail: 'https://picsum.photos/id/1018/250/150/',
-	},
-	{
-		original: 'https://picsum.photos/id/1015/1000/600/',
-		thumbnail: 'https://picsum.photos/id/1015/250/150/',
-	},
-	{
-		original: 'https://picsum.photos/id/1019/1000/600/',
-		thumbnail: 'https://picsum.photos/id/1019/250/150/',
-	},
-];
-
 function Cat({ cat }: { cat: CatType }) {
 	const router = useRouter();
 	const imgGalleryRef = useRef(null);
@@ -81,6 +66,8 @@ function Cat({ cat }: { cat: CatType }) {
 
 	const showFullScreenImg = () => {
 		if(imgGalleryRef.current){
+			document.body.style.overflowY = "hidden";
+			document.body.style.scrollBehavior = "none";
 			setIsShowFullscreen(true);
 			(imgGalleryRef.current as any).fullScreen();
 		}
@@ -88,6 +75,8 @@ function Cat({ cat }: { cat: CatType }) {
 
 	const hideFullScreenImg = () => {
 		if(imgGalleryRef.current){
+			document.body.style.overflowY = "auto";
+			document.body.style.scrollBehavior = "auto";
 			setIsShowFullscreen(false);
 			(imgGalleryRef.current as any).exitFullScreen();
 		}
