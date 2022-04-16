@@ -691,7 +691,7 @@ function Cat({ cat }: { cat: CatType }) {
 							items={cat.images.map((image => ({
 								original: `/images/cat/${cat.type}/${image}`,
 							})))}
-							showFullscreenButton={true}
+							showFullscreenButton={false}
 							showPlayButton={false} 
 							showBullets={false}
 							showThumbnails={false}
