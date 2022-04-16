@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { cats as catsData } from "../../data/cats";
 import type { CatType } from "../../data/cats";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -22,6 +22,7 @@ import { AppBar } from "@components/AppBar";
 import { useRouter } from "next/router";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ImageGallery from 'react-image-gallery';
+import Link from "next/link";
 
 const images = [
 	{
@@ -43,12 +44,25 @@ function Cat({ cat }: { cat: CatType }) {
 	const imgGalleryRef = useRef(null);
 	const [isShowFullscreen, setIsShowFullscreen] = useState(false);
 
+	useEffect(() => {
+        const onHashChangeStart = (url: string) => {
+			if(url.indexOf("#fullscreen") >= 0) {
+				showFullScreenImg();
+			} else {
+				hideFullScreenImg();
+			}
+        };
+
+        router.events.on("hashChangeStart", onHashChangeStart);
+
+        return () => {
+            router.events.off("hashChangeStart", onHashChangeStart);
+        };
+    }, [router]);
+
+
 	const handleClickBack = () => {
-		if(isShowFullscreen) {
-			hideFullScreenImg();
-		} else {
-			router.back();
-		}
+		router.back();
 	};
 
 	const handleClickHome = () => {
@@ -56,14 +70,19 @@ function Cat({ cat }: { cat: CatType }) {
 	};
 
 	const handleClickImg = (idx: number) => {
-		showFullScreenImg(idx);
+		moveToIndexInFullScreen(idx);
 	}
 
-	const showFullScreenImg = (idx: number) => {
+	const moveToIndexInFullScreen = (idx: number) => {
+		if(imgGalleryRef.current){
+			(imgGalleryRef.current as any).slideToIndex(idx);
+		}
+	}
+
+	const showFullScreenImg = () => {
 		if(imgGalleryRef.current){
 			setIsShowFullscreen(true);
 			(imgGalleryRef.current as any).fullScreen();
-			(imgGalleryRef.current as any).slideToIndex(idx);
 		}
 	}
 
@@ -663,14 +682,16 @@ function Cat({ cat }: { cat: CatType }) {
 					>
 						<ImageList>
 							{cat.images.map((image, i) => (
-								<ImageListItem key={image}>
-									<Image
-										src={`/images/cat/${cat.type}/${image}`}
-										width={300}
-										height={300}
-										onClick={() => handleClickImg(i)}
-									/>
-								</ImageListItem>
+								<Link key={image} href={"#fullscreen"}>
+									<ImageListItem>
+										<Image
+											src={`/images/cat/${cat.type}/${image}`}
+											width={300}
+											height={300}
+											onClick={() => handleClickImg(i)}
+										/>
+									</ImageListItem>
+								</Link>
 							))}
 						</ImageList>
 					</Box>
