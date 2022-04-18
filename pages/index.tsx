@@ -80,13 +80,11 @@ function Home({ cats }: HomeProps) {
 
 	useEffect(() => {
 		let isApp = false;
-		const mqStandAlone = "(display-mode: standalone)";
 
-		if (
-			(navigator as any).standalone ||
-			window.matchMedia(mqStandAlone).matches
-		) {
-			alert("하위");
+		if (window.matchMedia("(display-mode: standalone)").matches) {
+			// do things here
+			// set a variable to be used when calling something
+			// e.g. call Google Analytics to track standalone use
 			isApp = true;
 		}
 
