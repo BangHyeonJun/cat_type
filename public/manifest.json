@@ -1,7 +1,7 @@
 {
 	"theme_color": "#FF98BA",
 	"background_color": "#FF98BA",
-	"display": "fullscreen",
+	"display": "standalone",
 	"scope": "/",
 	"start_url": "/",
 	"short_name": "\ubb34\uc2a8\uc885\uc774\ub0e5",
