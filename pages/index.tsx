@@ -81,9 +81,8 @@ function Home({ cats }: HomeProps) {
 	useEffect(() => {
 		const showDownloadPopup = (e: any) => {
 			e.preventDefault();
-			alert(window.matchMedia("(display-mode: standalone)").matches);
+
 			if (window.matchMedia("(display-mode: standalone)").matches) {
-				alert("display-mode is standalone");
 			} else {
 				const date = localStorage.getItem("reOpenDate");
 
