@@ -86,6 +86,7 @@ function Home({ cats }: HomeProps) {
 			(navigator as any).standalone ||
 			window.matchMedia(mqStandAlone).matches
 		) {
+			alert("하위");
 			isApp = true;
 		}
 
