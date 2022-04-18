@@ -79,11 +79,23 @@ function Home({ cats }: HomeProps) {
 	};
 
 	useEffect(() => {
-		const date = localStorage.getItem("reOpenDate");
+		let isApp = false;
+		const mqStandAlone = "(display-mode: standalone)";
 
-		if (date === null || new Date(date) <= new Date()) {
-			handleOpen();
-			localStorage.removeItem("reOpenDate");
+		if (
+			(navigator as any).standalone ||
+			window.matchMedia(mqStandAlone).matches
+		) {
+			isApp = true;
+		}
+
+		if (!isApp) {
+			const date = localStorage.getItem("reOpenDate");
+
+			if (date === null || new Date(date) <= new Date()) {
+				handleOpen();
+				localStorage.removeItem("reOpenDate");
+			}
 		}
 	}, []);
 
