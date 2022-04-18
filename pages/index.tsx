@@ -79,21 +79,26 @@ function Home({ cats }: HomeProps) {
 	};
 
 	useEffect(() => {
-		let isApp = false;
+		const showDownloadPopup = (e: any) => {
+			e.preventDefault();
+			alert(window.matchMedia("(display-mode: standalone)").matches);
+			if (window.matchMedia("(display-mode: standalone)").matches) {
+				alert("display-mode is standalone");
+			} else {
+				const date = localStorage.getItem("reOpenDate");
 
-		console.log();
-		if (window.matchMedia("(display-mode: standalone)").matches) {
-			isApp = true;
-		}
-
-		if (!isApp) {
-			const date = localStorage.getItem("reOpenDate");
-
-			if (date === null || new Date(date) <= new Date()) {
-				handleOpen();
-				localStorage.removeItem("reOpenDate");
+				if (date === null || new Date(date) <= new Date()) {
+					handleOpen();
+					localStorage.removeItem("reOpenDate");
+				}
 			}
-		}
+		};
+
+		window.addEventListener("beforeinstallprompt", showDownloadPopup);
+
+		return () => {
+			window.removeEventListener("beforeinstallprompt", showDownloadPopup);
+		};
 	}, []);
 
 	return (
