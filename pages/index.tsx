@@ -106,6 +106,16 @@ function Home({ cats }: HomeProps) {
 		};
 
 		window.addEventListener("beforeinstallprompt", showDownloadPopup);
+		window.addEventListener("load", () => {
+			let trackText;
+			if (navigator && (navigator as any).standalone) {
+				setTest((old) => [...old, `Launched: Installed (iOS)`]);
+			} else if (matchMedia("(display-mode: standalone)").matches) {
+				setTest((old) => [...old, `Launched: Installed`]);
+			} else {
+				setTest((old) => [...old, `Launched: Browser Tab`]);
+			}
+		});
 
 		return () => {
 			window.removeEventListener("beforeinstallprompt", showDownloadPopup);
