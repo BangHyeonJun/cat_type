@@ -81,6 +81,7 @@ function Home({ cats }: HomeProps) {
 	};
 
 	useEffect(() => {
+		setTest((old) => [...old, "Event Log : "]);
 		const showDownloadPopup = (e: any) => {
 			e.preventDefault();
 
