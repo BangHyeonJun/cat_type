@@ -82,10 +82,14 @@ function Home({ cats }: HomeProps) {
 		const showDownloadPopup = (e: any) => {
 			e.preventDefault();
 
+			alert("첫번째");
 			if (window.matchMedia("(display-mode: standalone)").matches) {
+				alert("TRUE");
 			} else {
+				alert("FALSE");
 				const date = localStorage.getItem("reOpenDate");
 
+				alert(date?.toString());
 				if (date === null || new Date(date) <= new Date()) {
 					handleOpen();
 					localStorage.removeItem("reOpenDate");
