@@ -65,6 +65,8 @@ function Home({ cats }: HomeProps) {
 	const [open, setOpen] = useState(false);
 	const router = useRouter();
 
+	const [test, setTest] = useState<string[]>([]);
+
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 	const handleClickCloseOneDay = () => {
@@ -82,14 +84,19 @@ function Home({ cats }: HomeProps) {
 		const showDownloadPopup = (e: any) => {
 			e.preventDefault();
 
-			alert("첫번째");
+			setTest((old) => [...old, "첫번쨰"]);
 			if (window.matchMedia("(display-mode: standalone)").matches) {
-				alert("TRUE");
+				setTest((old) => [...old, "TRUE"]);
 			} else {
-				alert("FALSE");
+				setTest((old) => [...old, "FALSE"]);
 				const date = localStorage.getItem("reOpenDate");
 
-				alert(date?.toString());
+				if (date) {
+					setTest((old) => [...old, `date : ${date}`]);
+				} else {
+					setTest((old) => [...old, `date : undefined`]);
+				}
+
 				if (date === null || new Date(date) <= new Date()) {
 					handleOpen();
 					localStorage.removeItem("reOpenDate");
@@ -108,6 +115,10 @@ function Home({ cats }: HomeProps) {
 		<>
 			{/* 앱 바 */}
 			<AppBar>홈</AppBar>
+
+			{test.map((v, i) => (
+				<h3 key={i}>{v}</h3>
+			))}
 
 			{/* 고양이 리스트 */}
 			<main>
