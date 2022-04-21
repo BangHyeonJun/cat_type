@@ -63,10 +63,41 @@ interface HomeProps {
 
 function Home({ cats }: HomeProps) {
 	const [open, setOpen] = useState(false);
+	const [isDownloadBtn, setIsDownloadBtn] = useState(false);
 	const router = useRouter();
 
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
+
+	useEffect(() => {
+		const showDownloadPopup = () => {
+			if (navigator && (navigator as any).standalone) {
+				console.log(`Launched: Installed (iOS)`);
+			} else if (matchMedia("(display-mode: standalone)").matches) {
+				console.log(`Launched: Installed`);
+			} else {
+				setIsDownloadBtn(true);
+			}
+		};
+
+		window.addEventListener("load", showDownloadPopup);
+
+		return () => {
+			window.removeEventListener("load", showDownloadPopup);
+		};
+	}, []);
+
+	useEffect(() => {
+		if (isDownloadBtn) {
+			const date = localStorage.getItem("reOpenDate");
+
+			if (date === null || new Date(date) <= new Date()) {
+				handleOpen();
+				localStorage.removeItem("reOpenDate");
+			}
+		}
+	}, [isDownloadBtn]);
+
 	const handleClickCloseOneDay = () => {
 		const today = new Date();
 		const tomorrow = new Date(today.setDate(today.getDate() + 1));
@@ -78,33 +109,10 @@ function Home({ cats }: HomeProps) {
 		setOpen(false);
 	};
 
-	useEffect(() => {
-		const showDownloadPopup = () => {
-			if (navigator && (navigator as any).standalone) {
-				console.log(`Launched: Installed (iOS)`);
-			} else if (matchMedia("(display-mode: standalone)").matches) {
-				console.log(`Launched: Installed`);
-			} else {
-				const date = localStorage.getItem("reOpenDate");
-
-				if (date === null || new Date(date) <= new Date()) {
-					handleOpen();
-					localStorage.removeItem("reOpenDate");
-				}
-			}
-		};
-
-		window.addEventListener("load", showDownloadPopup);
-
-		return () => {
-			window.removeEventListener("load", showDownloadPopup);
-		};
-	}, []);
-
 	return (
 		<>
 			{/* 앱 바 */}
-			<AppBar>홈</AppBar>
+			<AppBar isDownloadBtn={isDownloadBtn}>홈</AppBar>
 
 			{/* 고양이 리스트 */}
 			<main>
