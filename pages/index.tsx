@@ -83,9 +83,9 @@ function Home({ cats }: HomeProps) {
 	useEffect(() => {
 		const showDownloadPopup = () => {
 			if (navigator && (navigator as any).standalone) {
-				console.log((old) => [...old, `Launched: Installed (iOS)`]);
+				console.log(`Launched: Installed (iOS)`);
 			} else if (matchMedia("(display-mode: standalone)").matches) {
-				console.log((old) => [...old, `Launched: Installed`]);
+				console.log(`Launched: Installed`);
 			} else {
 				const date = localStorage.getItem("reOpenDate");
 
