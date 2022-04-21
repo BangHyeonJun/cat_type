@@ -65,8 +65,6 @@ function Home({ cats }: HomeProps) {
 	const [open, setOpen] = useState(false);
 	const router = useRouter();
 
-	const [test, setTest] = useState<string[]>([]);
-
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 	const handleClickCloseOneDay = () => {
@@ -107,10 +105,6 @@ function Home({ cats }: HomeProps) {
 		<>
 			{/* 앱 바 */}
 			<AppBar>홈</AppBar>
-
-			{test.map((v, i) => (
-				<h3 key={i}>{v}</h3>
-			))}
 
 			{/* 고양이 리스트 */}
 			<main>
