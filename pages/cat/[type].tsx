@@ -99,6 +99,29 @@ function Cat({ cat }: { cat: CatType }) {
 		moveToIndexInFullScreen(idx);
 	};
 
+	const handleExpandPictureAccordion = () => {
+		let initFlag = false;
+		return (event: React.SyntheticEvent, expanded: boolean) => {
+			if (expanded && !initFlag) {
+				initFlag = true;
+				toast("🐈 사진을 클릭해보세요", {
+					position: "bottom-center",
+					autoClose: 3000,
+					hideProgressBar: true,
+					closeOnClick: true,
+					draggable: true,
+					style: {
+						fontSize: "1rem",
+						letterSpacing: "0.1rem",
+						fontWeight: 600,
+						fontFamily: "Gothic A1",
+					},
+					theme: "dark",
+				});
+			}
+		};
+	};
+
 	const moveToIndexInFullScreen = (idx: number) => {
 		if (imgGalleryRef.current) {
 			(imgGalleryRef.current as any).slideToIndex(idx);
@@ -598,7 +621,10 @@ function Cat({ cat }: { cat: CatType }) {
 						marginTop: 2,
 					}}
 				>
-					<Accordion defaultExpanded={false}>
+					<Accordion
+						defaultExpanded={false}
+						onChange={handleExpandPictureAccordion()}
+					>
 						<AccordionSummary
 							aria-controls="panel1a-content"
 							id="panel1a-header"
@@ -640,7 +666,6 @@ function Cat({ cat }: { cat: CatType }) {
 						</AccordionDetails>
 					</Accordion>
 				</Container>
-				<ToastContainer />
 
 				<Box sx={{ display: isShowFullscreen ? "block" : "none" }}>
 					<ImageGallery
@@ -656,6 +681,18 @@ function Cat({ cat }: { cat: CatType }) {
 						slideDuration={250}
 					/>
 				</Box>
+
+				<ToastContainer
+					position="bottom-center"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
 			</main>
 		</>
 	);
