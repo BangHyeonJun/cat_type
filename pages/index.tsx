@@ -80,10 +80,11 @@ function Home({ cats }: HomeProps) {
 			}
 		};
 
-		window.addEventListener("load", showDownloadPopup);
+		showDownloadPopup();
+		// window.addEventListener("load", showDownloadPopup);
 
 		return () => {
-			window.removeEventListener("load", showDownloadPopup);
+			// window.removeEventListener("load", showDownloadPopup);
 		};
 	}, []);
 
