@@ -1,28 +1,64 @@
 import { useRef, useState, useEffect } from "react";
+import { styled } from "@mui/material/styles";
 import { cats as catsData } from "../../data/cats";
 import type { CatType } from "../../data/cats";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import {
 	Box,
-	Collapse,
 	Container,
-	IconButton,
 	ImageList,
 	ImageListItem,
-	List,
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
-	Toolbar,
 	Typography,
 } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { AppBar } from "@components/AppBar";
 import { useRouter } from "next/router";
-import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-import ImageGallery from 'react-image-gallery';
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import MuiAccordionSummary, {
+	AccordionSummaryProps,
+} from "@mui/material/AccordionSummary";
+import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
+
+import ImageGallery from "react-image-gallery";
 import Link from "next/link";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const Accordion = styled((props: AccordionProps) => (
+	<MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+	border: `1px solid ${theme.palette.divider}`,
+	"&:not(:last-child)": {
+		borderBottom: 0,
+	},
+	"&:before": {
+		display: "none",
+	},
+}));
+
+const AccordionSummary = styled((props: AccordionSummaryProps) => (
+	<MuiAccordionSummary
+		expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
+		{...props}
+	/>
+))(({ theme }) => ({
+	backgroundColor: "rgba(0, 0, 0, .02)",
+	flexDirection: "row-reverse",
+	"& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+		transform: "rotate(90deg)",
+	},
+	"& .MuiAccordionSummary-content": {
+		marginLeft: theme.spacing(1),
+	},
+}));
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+	padding: theme.spacing(2),
+	borderTop: "1px solid rgba(0, 0, 0, .125)",
+}));
 
 function Cat({ cat }: { cat: CatType }) {
 	const router = useRouter();
@@ -30,21 +66,26 @@ function Cat({ cat }: { cat: CatType }) {
 	const [isShowFullscreen, setIsShowFullscreen] = useState(false);
 
 	useEffect(() => {
-        const onHashChangeStart = (url: string) => {
-			if(url.indexOf("#fullscreen") >= 0) {
+		if (router.asPath.indexOf("#fullscreen") >= 0) {
+			router.back();
+		}
+	}, []);
+
+	useEffect(() => {
+		const onHashChangeStart = (url: string) => {
+			if (url.indexOf("#fullscreen") >= 0) {
 				showFullScreenImg();
 			} else {
 				hideFullScreenImg();
 			}
-        };
+		};
 
-        router.events.on("hashChangeStart", onHashChangeStart);
+		router.events.on("hashChangeStart", onHashChangeStart);
 
-        return () => {
-            router.events.off("hashChangeStart", onHashChangeStart);
-        };
-    }, [router]);
-
+		return () => {
+			router.events.off("hashChangeStart", onHashChangeStart);
+		};
+	}, [router]);
 
 	const handleClickBack = () => {
 		router.back();
@@ -56,31 +97,31 @@ function Cat({ cat }: { cat: CatType }) {
 
 	const handleClickImg = (idx: number) => {
 		moveToIndexInFullScreen(idx);
-	}
+	};
 
 	const moveToIndexInFullScreen = (idx: number) => {
-		if(imgGalleryRef.current){
+		if (imgGalleryRef.current) {
 			(imgGalleryRef.current as any).slideToIndex(idx);
 		}
-	}
+	};
 
 	const showFullScreenImg = () => {
-		if(imgGalleryRef.current){
+		if (imgGalleryRef.current) {
 			document.body.style.overflowY = "hidden";
 			document.body.style.scrollBehavior = "none";
 			setIsShowFullscreen(true);
 			(imgGalleryRef.current as any).fullScreen();
 		}
-	}
+	};
 
 	const hideFullScreenImg = () => {
-		if(imgGalleryRef.current){
+		if (imgGalleryRef.current) {
 			document.body.style.overflowY = "auto";
 			document.body.style.scrollBehavior = "auto";
 			setIsShowFullscreen(false);
 			(imgGalleryRef.current as any).exitFullScreen();
 		}
-	}
+	};
 
 	return (
 		<>
@@ -127,14 +168,17 @@ function Cat({ cat }: { cat: CatType }) {
 						</Box>
 
 						<Box>
-							<Image
-								src={`/images/cat/${cat.type}/${cat.thumb}`}
-								alt="고양이 썸네일"
-								width={"100%"}
-								height={70}
-								layout="responsive"
-								objectFit="contain"
-							/>
+							<Link href={"#fullscreen"} passHref>
+								<Image
+									src={`/images/cat/${cat.type}/${cat.thumb}`}
+									alt="고양이 썸네일"
+									width={"100%"}
+									height={70}
+									layout="responsive"
+									objectFit="contain"
+									onClick={() => handleClickImg(cat.images.length)}
+								/>
+							</Link>
 						</Box>
 					</Container>
 
@@ -311,6 +355,7 @@ function Cat({ cat }: { cat: CatType }) {
 					</Stack>
 				</Container>
 
+				{/* 설명 */}
 				<Container
 					disableGutters
 					maxWidth={"md"}
@@ -318,61 +363,46 @@ function Cat({ cat }: { cat: CatType }) {
 						marginTop: 2,
 					}}
 				>
-					<Box
-						sx={{
-							width: "100%",
-							display: "flex",
-							alignItems: "center",
-							borderBottom: "1px solid #000000",
-							paddingTop: 1,
-							paddingBottom: 1,
-						}}
-					>
-						<IconButton
-							aria-label="확장 버튼"
-							sx={{
-								transform: "rotate(90deg)",
-							}}
+					<Accordion defaultExpanded={true}>
+						<AccordionSummary
+							aria-controls="panel1a-content"
+							id="panel1a-header"
 						>
-							<ArrowForwardIosRoundedIcon
+							<Typography
+								component="h3"
 								sx={{
-									width: "18px",
-									height: "18px",
+									fontSize: "1.5rem",
+									fontWeight: 600,
+									marginTop: "4px",
+									marginLeft: 1,
 								}}
-							/>
-						</IconButton>
-						<Typography
-							component="h3"
-							sx={{
-								fontSize: "1.5rem",
-								fontWeight: 600,
-								marginTop: "4px",
-								marginLeft: 1,
-							}}
-						>
-							설명
-						</Typography>
-					</Box>
-
-					<Box
-						sx={{
-							width: "100%",
-							paddingTop: 2,
-						}}
-					>
-						<Typography
-							component="p"
-							sx={{
-								fontSize: "1rem",
-								fontWeight: 300,
-								lineHeight: "1.7rem",
-							}}
-						>
-							{cat.description}
-						</Typography>
-					</Box>
+							>
+								설명
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Box
+								sx={{
+									width: "100%",
+									paddingTop: 2,
+								}}
+							>
+								<Typography
+									component="p"
+									sx={{
+										fontSize: "1rem",
+										fontWeight: 300,
+										lineHeight: "1.7rem",
+									}}
+								>
+									{cat.description}
+								</Typography>
+							</Box>
+						</AccordionDetails>
+					</Accordion>
 				</Container>
 
+				{/* 외모 */}
 				<Container
 					disableGutters
 					maxWidth={"md"}
@@ -380,61 +410,46 @@ function Cat({ cat }: { cat: CatType }) {
 						marginTop: 2,
 					}}
 				>
-					<Box
-						sx={{
-							width: "100%",
-							display: "flex",
-							alignItems: "center",
-							borderBottom: "1px solid #000000",
-							paddingTop: 1,
-							paddingBottom: 1,
-						}}
-					>
-						<IconButton
-							aria-label="확장 버튼"
-							sx={{
-								transform: "rotate(90deg)",
-							}}
+					<Accordion defaultExpanded={true}>
+						<AccordionSummary
+							aria-controls="panel1a-content"
+							id="panel1a-header"
 						>
-							<ArrowForwardIosRoundedIcon
+							<Typography
+								component="h3"
 								sx={{
-									width: "18px",
-									height: "18px",
+									fontSize: "1.5rem",
+									fontWeight: 600,
+									marginTop: "4px",
+									marginLeft: 1,
 								}}
-							/>
-						</IconButton>
-						<Typography
-							component="h3"
-							sx={{
-								fontSize: "1.5rem",
-								fontWeight: 600,
-								marginTop: "4px",
-								marginLeft: 1,
-							}}
-						>
-							외모
-						</Typography>
-					</Box>
-
-					<Box
-						sx={{
-							width: "100%",
-							paddingTop: 2,
-						}}
-					>
-						<Typography
-							component="p"
-							sx={{
-								fontSize: "1rem",
-								fontWeight: 300,
-								lineHeight: "1.7rem",
-							}}
-						>
-							{cat.face}
-						</Typography>
-					</Box>
+							>
+								외모
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Box
+								sx={{
+									width: "100%",
+									paddingTop: 2,
+								}}
+							>
+								<Typography
+									component="p"
+									sx={{
+										fontSize: "1rem",
+										fontWeight: 300,
+										lineHeight: "1.7rem",
+									}}
+								>
+									{cat.face}
+								</Typography>
+							</Box>
+						</AccordionDetails>
+					</Accordion>
 				</Container>
 
+				{/* 털 모양 */}
 				<Container
 					disableGutters
 					maxWidth={"md"}
@@ -442,61 +457,46 @@ function Cat({ cat }: { cat: CatType }) {
 						marginTop: 2,
 					}}
 				>
-					<Box
-						sx={{
-							width: "100%",
-							display: "flex",
-							alignItems: "center",
-							borderBottom: "1px solid #000000",
-							paddingTop: 1,
-							paddingBottom: 1,
-						}}
-					>
-						<IconButton
-							aria-label="확장 버튼"
-							sx={{
-								transform: "rotate(90deg)",
-							}}
+					<Accordion defaultExpanded={true}>
+						<AccordionSummary
+							aria-controls="panel1a-content"
+							id="panel1a-header"
 						>
-							<ArrowForwardIosRoundedIcon
+							<Typography
+								component="h3"
 								sx={{
-									width: "18px",
-									height: "18px",
+									fontSize: "1.5rem",
+									fontWeight: 600,
+									marginTop: "4px",
+									marginLeft: 1,
 								}}
-							/>
-						</IconButton>
-						<Typography
-							component="h3"
-							sx={{
-								fontSize: "1.5rem",
-								fontWeight: 600,
-								marginTop: "4px",
-								marginLeft: 1,
-							}}
-						>
-							털 모양
-						</Typography>
-					</Box>
-
-					<Box
-						sx={{
-							width: "100%",
-							paddingTop: 2,
-						}}
-					>
-						<Typography
-							component="p"
-							sx={{
-								fontSize: "1rem",
-								fontWeight: 300,
-								lineHeight: "1.7rem",
-							}}
-						>
-							{cat.furDetail}
-						</Typography>
-					</Box>
+							>
+								털 모양
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Box
+								sx={{
+									width: "100%",
+									paddingTop: 2,
+								}}
+							>
+								<Typography
+									component="p"
+									sx={{
+										fontSize: "1rem",
+										fontWeight: 300,
+										lineHeight: "1.7rem",
+									}}
+								>
+									{cat.furDetail}
+								</Typography>
+							</Box>
+						</AccordionDetails>
+					</Accordion>
 				</Container>
 
+				{/* 성격 */}
 				<Container
 					disableGutters
 					maxWidth={"md"}
@@ -504,61 +504,46 @@ function Cat({ cat }: { cat: CatType }) {
 						marginTop: 2,
 					}}
 				>
-					<Box
-						sx={{
-							width: "100%",
-							display: "flex",
-							alignItems: "center",
-							borderBottom: "1px solid #000000",
-							paddingTop: 1,
-							paddingBottom: 1,
-						}}
-					>
-						<IconButton
-							aria-label="확장 버튼"
-							sx={{
-								transform: "rotate(90deg)",
-							}}
+					<Accordion defaultExpanded={true}>
+						<AccordionSummary
+							aria-controls="panel1a-content"
+							id="panel1a-header"
 						>
-							<ArrowForwardIosRoundedIcon
+							<Typography
+								component="h3"
 								sx={{
-									width: "18px",
-									height: "18px",
+									fontSize: "1.5rem",
+									fontWeight: 600,
+									marginTop: "4px",
+									marginLeft: 1,
 								}}
-							/>
-						</IconButton>
-						<Typography
-							component="h3"
-							sx={{
-								fontSize: "1.5rem",
-								fontWeight: 600,
-								marginTop: "4px",
-								marginLeft: 1,
-							}}
-						>
-							성격
-						</Typography>
-					</Box>
-
-					<Box
-						sx={{
-							width: "100%",
-							paddingTop: 2,
-						}}
-					>
-						<Typography
-							component="p"
-							sx={{
-								fontSize: "1rem",
-								fontWeight: 300,
-								lineHeight: "1.7rem",
-							}}
-						>
-							{cat.personality}
-						</Typography>
-					</Box>
+							>
+								성격
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Box
+								sx={{
+									width: "100%",
+									paddingTop: 2,
+								}}
+							>
+								<Typography
+									component="p"
+									sx={{
+										fontSize: "1rem",
+										fontWeight: 300,
+										lineHeight: "1.7rem",
+									}}
+								>
+									{cat.personality}
+								</Typography>
+							</Box>
+						</AccordionDetails>
+					</Accordion>
 				</Container>
 
+				{/* 돌보는 방법 */}
 				<Container
 					disableGutters
 					maxWidth={"md"}
@@ -566,61 +551,46 @@ function Cat({ cat }: { cat: CatType }) {
 						marginTop: 2,
 					}}
 				>
-					<Box
-						sx={{
-							width: "100%",
-							display: "flex",
-							alignItems: "center",
-							borderBottom: "1px solid #000000",
-							paddingTop: 1,
-							paddingBottom: 1,
-						}}
-					>
-						<IconButton
-							aria-label="확장 버튼"
-							sx={{
-								transform: "rotate(90deg)",
-							}}
+					<Accordion defaultExpanded={true}>
+						<AccordionSummary
+							aria-controls="panel1a-content"
+							id="panel1a-header"
 						>
-							<ArrowForwardIosRoundedIcon
+							<Typography
+								component="h3"
 								sx={{
-									width: "18px",
-									height: "18px",
+									fontSize: "1.5rem",
+									fontWeight: 600,
+									marginTop: "4px",
+									marginLeft: 1,
 								}}
-							/>
-						</IconButton>
-						<Typography
-							component="h3"
-							sx={{
-								fontSize: "1.5rem",
-								fontWeight: 600,
-								marginTop: "4px",
-								marginLeft: 1,
-							}}
-						>
-							돌보는 방법
-						</Typography>
-					</Box>
-
-					<Box
-						sx={{
-							width: "100%",
-							paddingTop: 2,
-						}}
-					>
-						<Typography
-							component="p"
-							sx={{
-								fontSize: "1rem",
-								fontWeight: 300,
-								lineHeight: "1.7rem",
-							}}
-						>
-							{cat.care}
-						</Typography>
-					</Box>
+							>
+								돌보는 방법
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Box
+								sx={{
+									width: "100%",
+									paddingTop: 2,
+								}}
+							>
+								<Typography
+									component="p"
+									sx={{
+										fontSize: "1rem",
+										fontWeight: 300,
+										lineHeight: "1.7rem",
+									}}
+								>
+									{cat.care}
+								</Typography>
+							</Box>
+						</AccordionDetails>
+					</Accordion>
 				</Container>
 
+				{/* 사진 */}
 				<Container
 					disableGutters
 					maxWidth={"md"}
@@ -628,78 +598,64 @@ function Cat({ cat }: { cat: CatType }) {
 						marginTop: 2,
 					}}
 				>
-					<Box
-						sx={{
-							width: "100%",
-							display: "flex",
-							alignItems: "center",
-							borderBottom: "1px solid #000000",
-							paddingTop: 1,
-							paddingBottom: 1,
-						}}
-					>
-						<IconButton
-							aria-label="확장 버튼"
-							sx={{
-								transform: "rotate(90deg)",
-							}}
+					<Accordion defaultExpanded={false}>
+						<AccordionSummary
+							aria-controls="panel1a-content"
+							id="panel1a-header"
 						>
-							<ArrowForwardIosRoundedIcon
+							<Typography
+								component="h3"
 								sx={{
-									width: "18px",
-									height: "18px",
+									fontSize: "1.5rem",
+									fontWeight: 600,
+									marginTop: "4px",
+									marginLeft: 1,
+									color: "",
 								}}
-							/>
-						</IconButton>
-						<Typography
-							component="h3"
-							sx={{
-								fontSize: "1.5rem",
-								fontWeight: 600,
-								marginTop: "4px",
-								marginLeft: 1,
-							}}
-						>
-							사진
-						</Typography>
-					</Box>
-
-					<Box
-						sx={{
-							width: "100%",
-						}}
-					>
-						<ImageList>
-							{cat.images.map((image, i) => (
-								<Link key={image} href={"#fullscreen"}>
-									<ImageListItem>
-										<Image
-											src={`/images/cat/${cat.type}/${image}`}
-											width={300}
-											height={300}
-											onClick={() => handleClickImg(i)}
-										/>
-									</ImageListItem>
-								</Link>
-							))}
-						</ImageList>
-					</Box>
-
-					<Box sx={{ display: isShowFullscreen? "block" : "none" }}>
-						<ImageGallery 
-							ref={imgGalleryRef} 
-							items={cat.images.map((image => ({
-								original: `/images/cat/${cat.type}/${image}`,
-							})))}
-							showFullscreenButton={false}
-							showPlayButton={false} 
-							showBullets={false}
-							showThumbnails={false}
-							useBrowserFullscreen={false}
-							slideDuration={250}
-						/>
-					</Box>
+							>
+								사진
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Box
+								sx={{
+									width: "100%",
+								}}
+							>
+								<ImageList>
+									{cat.images.map((image, i) => (
+										<Link key={image} href={"#fullscreen"} passHref>
+											<ImageListItem>
+												<Image
+													src={`/images/cat/${cat.type}/${image}`}
+													width={300}
+													height={300}
+													onClick={() => handleClickImg(i)}
+												/>
+											</ImageListItem>
+										</Link>
+									))}
+								</ImageList>
+							</Box>
+						</AccordionDetails>
+					</Accordion>
 				</Container>
+				<ToastContainer />
+
+				<Box sx={{ display: isShowFullscreen ? "block" : "none" }}>
+					<ImageGallery
+						ref={imgGalleryRef}
+						items={[...cat.images, cat.thumb].map((image) => ({
+							original: `/images/cat/${cat.type}/${image}`,
+						}))}
+						showFullscreenButton={false}
+						showPlayButton={false}
+						showBullets={false}
+						showThumbnails={false}
+						useBrowserFullscreen={false}
+						slideDuration={250}
+					/>
+				</Box>
 			</main>
 		</>
 	);
