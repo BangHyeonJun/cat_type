@@ -81,22 +81,13 @@ function Home({ cats }: HomeProps) {
 	};
 
 	useEffect(() => {
-		setTest((old) => [...old, "Event Log : "]);
-		const showDownloadPopup = (e: any) => {
-			e.preventDefault();
-
-			setTest((old) => [...old, "첫번쨰"]);
-			if (window.matchMedia("(display-mode: standalone)").matches) {
-				setTest((old) => [...old, "TRUE"]);
+		const showDownloadPopup = () => {
+			if (navigator && (navigator as any).standalone) {
+				console.log((old) => [...old, `Launched: Installed (iOS)`]);
+			} else if (matchMedia("(display-mode: standalone)").matches) {
+				console.log((old) => [...old, `Launched: Installed`]);
 			} else {
-				setTest((old) => [...old, "FALSE"]);
 				const date = localStorage.getItem("reOpenDate");
-
-				if (date) {
-					setTest((old) => [...old, `date : ${date}`]);
-				} else {
-					setTest((old) => [...old, `date : undefined`]);
-				}
 
 				if (date === null || new Date(date) <= new Date()) {
 					handleOpen();
@@ -105,20 +96,10 @@ function Home({ cats }: HomeProps) {
 			}
 		};
 
-		window.addEventListener("beforeinstallprompt", showDownloadPopup);
-		window.addEventListener("load", () => {
-			let trackText;
-			if (navigator && (navigator as any).standalone) {
-				setTest((old) => [...old, `Launched: Installed (iOS)`]);
-			} else if (matchMedia("(display-mode: standalone)").matches) {
-				setTest((old) => [...old, `Launched: Installed`]);
-			} else {
-				setTest((old) => [...old, `Launched: Browser Tab`]);
-			}
-		});
+		window.addEventListener("load", showDownloadPopup);
 
 		return () => {
-			window.removeEventListener("beforeinstallprompt", showDownloadPopup);
+			window.removeEventListener("load", showDownloadPopup);
 		};
 	}, []);
 
