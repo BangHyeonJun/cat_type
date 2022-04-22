@@ -179,7 +179,7 @@ const cats: CatType[] = [
 		],
 		name: "러시안 블루",
 		enName: "Russian Blue",
-		home: "미국",
+		home: "러시아",
 		bodyType: "포린",
 		weight: "3.5 ~ 4.5 kg",
 		fur: fur.short,
