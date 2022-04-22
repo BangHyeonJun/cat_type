@@ -72,6 +72,8 @@ function Install() {
 					console.log("Thanks for sharing!");
 				})
 				.catch(console.error);
+		} else {
+			window.open("https://cat-type.vercel.app");
 		}
 	};
 
@@ -97,7 +99,6 @@ function Install() {
 				>
 					<Accordion>
 						<AccordionSummary
-							expandIcon={<ExpandMoreRoundedIcon />}
 							aria-controls="panel1a-content"
 							id="panel1a-header"
 						>
@@ -252,7 +253,6 @@ function Install() {
 
 					<Accordion>
 						<AccordionSummary
-							expandIcon={<ExpandMoreRoundedIcon />}
 							aria-controls="panel1a-content"
 							id="panel1a-header"
 						>
@@ -268,7 +268,216 @@ function Install() {
 								IOS 설치 방법
 							</Typography>
 						</AccordionSummary>
-						<AccordionDetails></AccordionDetails>
+						<AccordionDetails>
+							<Box
+								sx={{
+									width: "100%",
+									paddingTop: 2,
+								}}
+							>
+								<Typography
+									component="p"
+									sx={{
+										fontSize: "1rem",
+										fontWeight: 500,
+									}}
+								>
+									1.{" "}
+									<Typography
+										component="strong"
+										sx={{
+											fontWeight: 800,
+										}}
+									>
+										사파리
+									</Typography>{" "}
+									를 열어줍니다.
+								</Typography>
+
+								<Box sx={{ width: "100%" }}>
+									<Image
+										src={"/images/install/ios/1.jpg"}
+										width={100}
+										height={60}
+										layout="responsive"
+									/>
+								</Box>
+							</Box>
+
+							<Box
+								sx={{
+									width: "100%",
+									paddingTop: 2,
+								}}
+							>
+								<Typography
+									component="p"
+									sx={{
+										fontSize: "1rem",
+										fontWeight: 500,
+									}}
+								>
+									2. 주소창에
+									<Link onClick={showShareDialog} sx={{ cursor: "pointer" }}>
+										무슨종이냥?
+									</Link>{" "}
+									<Typography
+										component="strong"
+										sx={{
+											fontWeight: 800,
+										}}
+									>
+										사이트 주소
+									</Typography>{" "}
+									를 입력해줍니다.
+								</Typography>
+
+								<Box sx={{ width: "100%" }}>
+									<Image
+										src={"/images/install/ios/2.jpg"}
+										width={100}
+										height={60}
+										layout="responsive"
+									/>
+									<Image
+										src={"/images/install/ios/3.jpg"}
+										width={100}
+										height={60}
+										layout="responsive"
+									/>
+								</Box>
+							</Box>
+
+							<Box
+								sx={{
+									width: "100%",
+									paddingTop: 2,
+								}}
+							>
+								<Typography
+									component="p"
+									sx={{
+										fontSize: "1rem",
+										fontWeight: 500,
+									}}
+								>
+									3. 사파리{" "}
+									<Typography
+										component="strong"
+										sx={{
+											fontWeight: 800,
+										}}
+									>
+										메뉴
+									</Typography>{" "}
+									항목을 열어줍니다.
+								</Typography>
+
+								<Box sx={{ width: "100%" }}>
+									<Image
+										src={"/images/install/ios/4.jpg"}
+										width={100}
+										height={160}
+										layout="responsive"
+									/>
+								</Box>
+							</Box>
+
+							<Box
+								sx={{
+									width: "100%",
+									paddingTop: 2,
+								}}
+							>
+								<Typography
+									component="p"
+									sx={{
+										fontSize: "1rem",
+										fontWeight: 500,
+									}}
+								>
+									4.{" "}
+									<Typography
+										component="strong"
+										sx={{
+											fontWeight: 800,
+										}}
+									>
+										Add to Home Screen
+									</Typography>{" "}
+									버튼을 클릭해 줍니다.
+								</Typography>
+
+								<Box sx={{ width: "100%" }}>
+									<Image
+										src={"/images/install/ios/5.jpg"}
+										width={100}
+										height={160}
+										layout="responsive"
+									/>
+								</Box>
+							</Box>
+
+							<Box
+								sx={{
+									width: "100%",
+									paddingTop: 2,
+								}}
+							>
+								<Typography
+									component="p"
+									sx={{
+										fontSize: "1rem",
+										fontWeight: 500,
+									}}
+								>
+									5.{" "}
+									<Typography
+										component="strong"
+										sx={{
+											fontWeight: 800,
+										}}
+									>
+										Add
+									</Typography>{" "}
+									버튼을 클릭해 줍니다.
+								</Typography>
+
+								<Box sx={{ width: "100%" }}>
+									<Image
+										src={"/images/install/ios/6.jpg"}
+										width={100}
+										height={160}
+										layout="responsive"
+									/>
+								</Box>
+							</Box>
+
+							<Box
+								sx={{
+									width: "100%",
+									paddingTop: 2,
+								}}
+							>
+								<Typography
+									component="p"
+									sx={{
+										fontSize: "1rem",
+										fontWeight: 500,
+									}}
+								>
+									5. 앱이 설치된 것을 확인할 수 있습니다.
+								</Typography>
+								<Box sx={{ width: "100%" }}>
+									<Image
+										src={"/images/install/ios/7.jpg"}
+										width={100}
+										height={160}
+										layout="responsive"
+									/>
+								</Box>
+							</Box>
+						</AccordionDetails>
 					</Accordion>
 				</Container>
 			</main>
