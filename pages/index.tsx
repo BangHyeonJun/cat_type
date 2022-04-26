@@ -69,24 +69,24 @@ function Home({ cats }: HomeProps) {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
-	useEffect(() => {
-		const showDownloadPopup = () => {
-			if (navigator && (navigator as any).standalone) {
-				console.log(`Launched: Installed (iOS)`);
-			} else if (matchMedia("(display-mode: standalone)").matches) {
-				console.log(`Launched: Installed`);
-			} else {
-				setIsDownloadBtn(true);
-			}
-		};
+	// useEffect(() => {
+	// 	const showDownloadPopup = () => {
+	// 		if (navigator && (navigator as any).standalone) {
+	// 			console.log(`Launched: Installed (iOS)`);
+	// 		} else if (matchMedia("(display-mode: standalone)").matches) {
+	// 			console.log(`Launched: Installed`);
+	// 		} else {
+	// 			setIsDownloadBtn(true);
+	// 		}
+	// 	};
 
-		showDownloadPopup();
-		// window.addEventListener("load", showDownloadPopup);
+	// 	showDownloadPopup();
+	// 	// window.addEventListener("load", showDownloadPopup);
 
-		return () => {
-			// window.removeEventListener("load", showDownloadPopup);
-		};
-	}, []);
+	// 	return () => {
+	// 		// window.removeEventListener("load", showDownloadPopup);
+	// 	};
+	// }, []);
 
 	useEffect(() => {
 		if (isDownloadBtn) {
@@ -99,16 +99,16 @@ function Home({ cats }: HomeProps) {
 		}
 	}, [isDownloadBtn]);
 
-	const handleClickCloseOneDay = () => {
-		const today = new Date();
-		const tomorrow = new Date(today.setDate(today.getDate() + 1));
-		const yyyy = tomorrow.getFullYear();
-		const MM = tomorrow.getMonth() + 1;
-		const dd = tomorrow.getDate();
+	// const handleClickCloseOneDay = () => {
+	// 	const today = new Date();
+	// 	const tomorrow = new Date(today.setDate(today.getDate() + 1));
+	// 	const yyyy = tomorrow.getFullYear();
+	// 	const MM = tomorrow.getMonth() + 1;
+	// 	const dd = tomorrow.getDate();
 
-		localStorage.setItem("reOpenDate", `${yyyy}.${MM}.${dd}`);
-		setOpen(false);
-	};
+	// 	localStorage.setItem("reOpenDate", `${yyyy}.${MM}.${dd}`);
+	// 	setOpen(false);
+	// };
 
 	return (
 		<>
