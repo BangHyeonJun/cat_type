@@ -164,7 +164,8 @@ function Home({ cats }: HomeProps) {
 					</Grid>
 				</Container>
 
-				<Dialog
+				{/* 다이얼 로그*/}
+				{/* <Dialog
 					aria-labelledby="alert-dialog-title"
 					aria-describedby="alert-dialog-description"
 					open={open}
@@ -199,7 +200,7 @@ function Home({ cats }: HomeProps) {
 						</Button>
 						<Button onClick={() => router.push("/install")}>앱 다운로드</Button>
 					</DialogActions>
-				</Dialog>
+				</Dialog> */}
 
 				{/* 하단 네비게이션 */}
 				{/* <BottomNavigation /> */}
