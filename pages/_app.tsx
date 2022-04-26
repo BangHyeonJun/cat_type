@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
 import { AppProps } from "next/app";
+import Script from "next/script";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
@@ -9,9 +10,10 @@ import createEmotionCache from "../config/createEmotionCache";
 import { pwaTrackingListeners } from "../src/pwaEventlisteners";
 
 import "react-image-gallery/styles/scss/image-gallery.scss";
-import { useRouter } from "next/router";
 
-import * as ga from "../src/ga";
+// import { useRouter } from "next/router";
+
+// import * as ga from "../src/ga";
 
 const isBrowser = typeof window !== "undefined";
 
@@ -28,19 +30,19 @@ if (isBrowser) {
 
 function MyApp(props: MyAppProps) {
 	const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-	const router = useRouter();
+	// const router = useRouter();
 
-	useEffect(() => {
-		const handleRouteChange = (url: string) => {
-			ga.pageview(url);
-		};
+	// useEffect(() => {
+	// 	const handleRouteChange = (url: string) => {
+	// 		ga.pageview(url);
+	// 	};
 
-		router.events.on("routeChangeComplete", handleRouteChange);
+	// 	router.events.on("routeChangeComplete", handleRouteChange);
 
-		return () => {
-			router.events.off("routeChangeComplete", handleRouteChange);
-		};
-	}, [router.events]);
+	// 	return () => {
+	// 		router.events.off("routeChangeComplete", handleRouteChange);
+	// 	};
+	// }, [router.events]);
 
 	return (
 		<CacheProvider value={emotionCache}>
@@ -48,8 +50,20 @@ function MyApp(props: MyAppProps) {
 				<meta name="viewport" content="initial-scale=1, width=device-width" />
 			</Head>
 			<ThemeProvider theme={theme}>
+				{/* Google Tag Manager */}
+				<Script id="google-tag-manager" strategy="afterInteractive">
+					{`
+							(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+							new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+							j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+							'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+							})(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}');
+					`}
+				</Script>
+
 				{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 				<CssBaseline />
+
 				<Component {...pageProps} />
 			</ThemeProvider>
 		</CacheProvider>

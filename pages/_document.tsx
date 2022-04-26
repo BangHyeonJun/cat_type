@@ -98,7 +98,7 @@ class MyDocument extends Document {
 					{(this.props as any).emotionStyleTags}
 
 					{/* GA 스크립트 */}
-					<script
+					{/* <script
 						async
 						src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
 					/>
@@ -113,7 +113,7 @@ class MyDocument extends Document {
 								});
 							`,
 						}}
-					/>
+					/> */}
 				</Head>
 				<body>
 					<Main />
