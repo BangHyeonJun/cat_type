@@ -69,24 +69,24 @@ function Home({ cats }: HomeProps) {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
-	// useEffect(() => {
-	// 	const showDownloadPopup = () => {
-	// 		if (navigator && (navigator as any).standalone) {
-	// 			console.log(`Launched: Installed (iOS)`);
-	// 		} else if (matchMedia("(display-mode: standalone)").matches) {
-	// 			console.log(`Launched: Installed`);
-	// 		} else {
-	// 			setIsDownloadBtn(true);
-	// 		}
-	// 	};
+	useEffect(() => {
+		const showDownloadPopup = () => {
+			if (navigator && (navigator as any).standalone) {
+				console.log(`Launched: Installed (iOS)`);
+			} else if (matchMedia("(display-mode: standalone)").matches) {
+				console.log(`Launched: Installed`);
+			} else {
+				setIsDownloadBtn(true);
+			}
+		};
 
-	// 	showDownloadPopup();
-	// 	// window.addEventListener("load", showDownloadPopup);
+		showDownloadPopup();
+		// // window.addEventListener("load", showDownloadPopup);
 
-	// 	return () => {
-	// 		// window.removeEventListener("load", showDownloadPopup);
-	// 	};
-	// }, []);
+		// return () => {
+		// 	// window.removeEventListener("load", showDownloadPopup);
+		// };
+	}, []);
 
 	useEffect(() => {
 		if (isDownloadBtn) {
