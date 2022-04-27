@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://cat-type.vercel.app/
+
+# Sitemaps
+Sitemap: https://cat-type.vercel.app/sitemap.xml
