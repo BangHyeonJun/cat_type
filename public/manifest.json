@@ -21,7 +21,8 @@
 		{
 			"src": "images/icons/icon-96x96.png",
 			"sizes": "96x96",
-			"type": "image/png"
+			"type": "image/png",
+			"purpose": "any maskable"
 		},
 		{
 			"src": "images/icons/icon-144x144.png",
@@ -31,8 +32,7 @@
 		{
 			"src": "images/splash/icon-512x512.png",
 			"sizes": "512x512",
-			"type": "image/png",
-			"purpose": "any maskable"
+			"type": "image/png"
 		}
 	]
 }
