@@ -24,6 +24,50 @@ class MyDocument extends Document {
 					></meta>
 					<meta name="apple-mobile-web-app-title" content="무슨종이냥"></meta>
 
+					{/* OpenGraph */}
+					<meta property="og:title" content="무슨종이냥?" />
+					<meta
+						property="og:description"
+						content="당신이 키우는 고양이는 무슨종인지 알려드릴게요"
+					/>
+					<meta property="og:site_name" content="무슨종이냥" />
+					<meta property="og:type" content="website" />
+					<meta property="og:url" content="https://cat-type.vercel.app" />
+					<meta
+						property="og:image"
+						content="https://cat-type.vercel.app/images/icons/icon-512x512.png"
+					/>
+					<meta property="og:locale" content="ko_KR" />
+					<meta property="og:image:width" content="512" />
+					<meta property="og:image:height" content="512" />
+
+					{/* OpenGraph - Naver 블로그, 카카오톡 */}
+					<meta property="og:title" content="무슨종이냥" />
+					<meta property="og:url" content="https://cat-type.vercel.app" />
+					<meta property="og:type" content="website" />
+					<meta
+						property="og:image"
+						content="https://cat-type.vercel.app/images/icons/icon-512x512.png"
+					/>
+					<meta property="og:title" content="무슨종이냥" />
+					<meta
+						property="og:description"
+						content="당신이 키우는 고양이는 무슨종인지 알려드릴게요"
+					/>
+
+					{/* OpenGraph - 트위터 */}
+					<meta name="twitter:card" content="summary" />
+					<meta name="twitter:title" content="무슨종이냥" />
+					<meta
+						name="twitter:description"
+						content="당신이 키우는 고양이는 무슨종인지 알려드릴게요"
+					/>
+					<meta
+						name="twitter:image"
+						content="https://cat-type.vercel.app/images/icons/icon-512x512.png"
+					/>
+					<meta property="twitter:url" content="https://cat-type.vercel.app" />
+
 					{/* 컬러 */}
 					<meta name="msapplication-TileColor" content="#FF98BA"></meta>
 					<meta name="theme-color" content={theme.palette.primary.main}></meta>
