@@ -1,43 +1,18 @@
-import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import Container from "@mui/material/Container";
-import { styled, alpha } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Fade from "@mui/material/Fade";
-import Backdrop from "@mui/material/Backdrop";
-import CloseIcon from "@mui/icons-material/Close";
-import {
-	Button,
-	CardActionArea,
-	CardActions,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
-	Grid,
-	Modal,
-	Paper,
-	Stack,
-} from "@mui/material";
+import { CardActionArea, Grid, Stack } from "@mui/material";
 import { cats as catsData } from "../data/cats";
 import type { CatType } from "../data/cats";
 import Link from "next/link";
 import { AppBar } from "@components/AppBar";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { BottomNavigation } from "@components/BottomNavigation";
 import { useRouter } from "next/router";
+import { NextSeo } from "next-seo";
 
 const CatCard = styled(Card)(({ theme }) => ({
 	backgroundColor: "#ffffff",
@@ -112,6 +87,13 @@ function Home({ cats }: HomeProps) {
 
 	return (
 		<>
+			{/* 헤드 */}
+			<NextSeo
+				title="무슨종이냥 | 홈"
+				description="당신이 키우는 고양이는 무슨종인지 알려드릴게요"
+				canonical="https://cat-type.vercel.app/"
+			/>
+
 			{/* 앱 바 */}
 			<AppBar isDownloadBtn={isDownloadBtn}>홈</AppBar>
 

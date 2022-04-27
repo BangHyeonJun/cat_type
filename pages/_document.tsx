@@ -12,7 +12,7 @@ class MyDocument extends Document {
 					<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 					<meta
 						name="description"
-						content="당신의 고양이가 무슨 종인지 알 수 있도록 해줍니다."
+						content="당신이 키우는 고양이는 무슨종인지 알려드릴게요"
 					/>
 					<meta name="keywords" content="무슨종이냥,고양이,집사" />
 
@@ -76,7 +76,10 @@ class MyDocument extends Document {
 					<link rel="manifest" href="/manifest.json" />
 
 					{/* 아이콘 */}
-					<link rel="apple-touch-icon" href="/apple-icon.png"></link>
+					<link
+						rel="apple-touch-icon"
+						href="images/icons/icon-192x192.png"
+					></link>
 
 					{/* 파비콘 */}
 					<link

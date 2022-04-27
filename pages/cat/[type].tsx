@@ -26,6 +26,7 @@ import Link from "next/link";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { NextSeo } from "next-seo";
 
 const Accordion = styled((props: AccordionProps) => (
 	<MuiAccordion disableGutters elevation={0} square {...props} />
@@ -148,6 +149,13 @@ function Cat({ cat }: { cat: CatType }) {
 
 	return (
 		<>
+			{/* 헤드 */}
+			<NextSeo
+				title={`무슨종이냥 | ${cat.name}`}
+				description={cat.description}
+				canonical={`https://cat-type.vercel.app/cat/${cat.type}`}
+			/>
+
 			{/* 앱 바 */}
 			<AppBar
 				isBackBtn={true}
