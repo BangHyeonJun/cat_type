@@ -10,16 +10,19 @@ class MyDocument extends Document {
 				<Head>
 					<meta charSet="utf-8" />
 					<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-					<meta name="description" content="Description" />
-					<meta name="keywords" content="Keywords" />
+					<meta
+						name="description"
+						content="당신의 고양이가 무슨 종인지 알 수 있도록 해줍니다."
+					/>
+					<meta name="keywords" content="무슨종이냥,고양이,집사" />
 
-					<meta name="author" content=""></meta>
+					<meta name="author" content="방현준"></meta>
 					<meta name="apple-mobile-web-app-capable" content="yes"></meta>
 					<meta
 						name="apple-mobile-web-app-status-bar-style"
 						content="default"
 					></meta>
-					<meta name="apple-mobile-web-app-title" content="방현준"></meta>
+					<meta name="apple-mobile-web-app-title" content="무슨종이냥"></meta>
 
 					{/* 컬러 */}
 					<meta name="msapplication-TileColor" content="#FF98BA"></meta>
