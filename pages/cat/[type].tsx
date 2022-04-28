@@ -155,14 +155,8 @@ function Cat({ cat }: { cat: CatType }) {
 				description={
 					cat.description.length <= 60
 						? cat.description
-						: cat.description.substring(0, 60)
+						: `${cat.description.substring(0, 60)}...`
 				}
-				canonical={`https://cat-type.vercel.app/cat/${cat.type}`}
-			/>
-
-			<NextSeo
-				title={`무슨종이냥 | ${cat.name}`}
-				description={cat.description}
 				canonical={`https://cat-type.vercel.app/cat/${cat.type}`}
 				openGraph={{
 					type: "website",
