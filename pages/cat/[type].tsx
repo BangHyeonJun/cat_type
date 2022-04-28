@@ -152,8 +152,31 @@ function Cat({ cat }: { cat: CatType }) {
 			{/* 헤드 */}
 			<NextSeo
 				title={`무슨종이냥 | ${cat.name}`}
+				description={
+					cat.description.length <= 60
+						? cat.description
+						: cat.description.substring(0, 60)
+				}
+				canonical={`https://cat-type.vercel.app/cat/${cat.type}`}
+			/>
+
+			<NextSeo
+				title={`무슨종이냥 | ${cat.name}`}
 				description={cat.description}
 				canonical={`https://cat-type.vercel.app/cat/${cat.type}`}
+				openGraph={{
+					type: "website",
+					locale: "ko_KR",
+					url: `https://cat-type.vercel.app/cat/${cat.type}`,
+					title: `무슨종이냥 | ${cat.name}`,
+					site_name: "무슨종이냥",
+					images: [
+						{
+							url: `/images/cat/${cat.type}/${cat.thumb}`,
+							alt: `${cat.name} 사진`,
+						},
+					],
+				}}
 			/>
 
 			{/* 앱 바 */}

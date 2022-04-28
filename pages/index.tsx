@@ -13,6 +13,7 @@ import { AppBar } from "@components/AppBar";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
+import { height } from "@mui/system";
 
 const CatCard = styled(Card)(({ theme }) => ({
 	backgroundColor: "#ffffff",
@@ -92,6 +93,21 @@ function Home({ cats }: HomeProps) {
 				title="무슨종이냥 | 홈"
 				description="당신이 키우는 고양이는 무슨종인지 알려드릴게요"
 				canonical="https://cat-type.vercel.app/"
+				openGraph={{
+					type: "website",
+					locale: "ko_KR",
+					url: "https://cat-type.vercel.app",
+					title: "무슨종이냥 | 홈",
+					site_name: "무슨종이냥",
+					images: [
+						{
+							url: "https://cat-type.vercel.app/images/icons/icon-512x512.png",
+							width: 512,
+							height: 512,
+							alt: "무슨종이냥 아이콘",
+						},
+					],
+				}}
 			/>
 
 			{/* 앱 바 */}
