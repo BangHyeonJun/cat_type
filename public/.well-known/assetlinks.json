@@ -1,0 +1,22 @@
+[
+	{
+		"relation": ["delegate_permission/common.handle_all_urls"],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "app.vercel.cat_type.twa",
+			"sha256_cert_fingerprints": [
+				"22:A4:B5:56:B3:ED:88:3C:CB:16:BA:3C:EB:3E:19:DE:5B:C1:FA:E7:DA:8C:05:FE:50:65:3C:6D:69:47:3A:EC"
+			]
+		}
+	},
+	{
+		"relation": ["delegate_permission/common.handle_all_urls"],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "app.vercel.cat_type.twa",
+			"sha256_cert_fingerprints": [
+				"42:DC:FB:2E:DE:C1:AD:B1:15:44:CC:C7:C8:0B:67:2A:B3:B6:F0:F1:8D:13:6E:C0:63:2E:20:8F:AC:09:3C:B8"
+			]
+		}
+	}
+]
