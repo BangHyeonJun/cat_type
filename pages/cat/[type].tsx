@@ -225,6 +225,7 @@ function Cat({ cat }: { cat: CatType }) {
 									layout="responsive"
 									objectFit="contain"
 									onClick={() => handleClickImg(cat.images.length)}
+									priority={true}
 								/>
 							</Link>
 						</Box>
