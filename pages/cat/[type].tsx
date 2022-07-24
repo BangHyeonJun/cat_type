@@ -683,6 +683,7 @@ function Cat({ cat }: { cat: CatType }) {
 													width={300}
 													height={300}
 													onClick={() => handleClickImg(i)}
+													priority={i < 4}
 												/>
 											</ImageListItem>
 										</Link>

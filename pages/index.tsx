@@ -13,7 +13,6 @@ import { AppBar } from "@components/AppBar";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
-import { height } from "@mui/system";
 
 const CatCard = styled(Card)(({ theme }) => ({
 	backgroundColor: "#ffffff",
