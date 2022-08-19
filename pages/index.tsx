@@ -129,7 +129,7 @@ function Home({ cats }: HomeProps) {
 					>
 						{cats.map(({ id, name, type, thumb }) => (
 							<Grid key={id} item xs={4} sm={3} md={4}>
-								<Link href={`cat/${type}`}>
+								<Link href={`cat/${type}`} passHref>
 									<Card>
 										<CardActionArea>
 											<CardMedia
