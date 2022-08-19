@@ -8,8 +8,10 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../config/theme";
 import createEmotionCache from "../config/createEmotionCache";
 import { pwaTrackingListeners } from "../src/pwaEventlisteners";
+import Router from "next/router";
 
 import "react-image-gallery/styles/scss/image-gallery.scss";
+import { useElipsisLoading } from "@components/Loading";
 
 // import { useRouter } from "next/router";
 
@@ -30,6 +32,27 @@ if (isBrowser) {
 
 function MyApp(props: MyAppProps) {
 	const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+	const Loading = useElipsisLoading();
+
+	useEffect(() => {
+		const LoadingShow = () => {
+			Loading.show();
+		};
+		const LoadingHide = () => {
+			Loading.hide();
+		};
+
+		Router.events.on("routeChangeStart", LoadingShow);
+		Router.events.on("routeChangeComplete", LoadingHide);
+		Router.events.on("routeChangeError", LoadingHide);
+
+		return () => {
+			Router.events.off("routeChangeStart", LoadingShow);
+			Router.events.off("routeChangeComplete", LoadingHide);
+			Router.events.off("routeChangeError", LoadingHide);
+		};
+	}, []);
+
 	// const router = useRouter();
 
 	// useEffect(() => {

@@ -27,6 +27,7 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { NextSeo } from "next-seo";
+import { vibrateOnceOnClick } from "src/utils/viberate";
 
 const Accordion = styled((props: AccordionProps) => (
 	<MuiAccordion disableGutters elevation={0} square {...props} />
@@ -119,6 +120,7 @@ function Cat({ cat }: { cat: CatType }) {
 					},
 					theme: "dark",
 				});
+				vibrateOnceOnClick();
 			}
 		};
 	};
